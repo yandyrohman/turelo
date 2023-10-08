@@ -12,7 +12,22 @@ const routes = createRouter({
       name: 'board-detail',
       path: '/board/:id',
       component: () => import('./pages/Board.vue')
-    }
+    },
+    {
+      name: 'chart',
+      path: '/chart',
+      component: () => import('./pages/Charts.vue')
+    },
+    {
+      name: 'chart-detail',
+      path: '/chart/:id',
+      component: () => import('./pages/Chart.vue')
+    },
+    {
+      name: 'employee',
+      path: '/employee',
+      component: () => import('./pages/Employee.vue')
+    },
   ]
 })
 
