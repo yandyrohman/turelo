@@ -1,5 +1,9 @@
 <template>
-  ini detail board
+  <div class="w-full h-full">
+    <board-header />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+  import boardHeader from '../components/board/header.vue'
+</script>

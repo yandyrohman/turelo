@@ -3,9 +3,10 @@
     <div class="w-full h-[100px] flex justify-center items-center font-semibold select-none text-xl">Semua Board</div>
     <div class="w-full flex justify-center">
       <div class="w-[1000px] h-max grid grid-cols-3 gap-[40px]">
-        <div
+        <router-link
           v-for="i in 8"
           class="relative w-full h-[180px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer select-none"
+          to="/board/abc"
         >
           <img
             class="absolute w-full h-full object-cover top-0 left-0"
@@ -30,7 +31,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </router-link>
         <div class="w-full h-[180px] rounded-lg transition-all bg-black/5 border-2 border-dashed border-zinc-400 select-none cursor-pointer hover:bg-black/10 flex justify-center items-center">
           <icon icon="tabler:plus" class="text-[40px] text-zinc-500" />
         </div>
