@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-max flex justify-between px-[50px] py-7">
+  <div class="w-full h-[110px] flex justify-between px-[50px] pt-[20px]">
     <div class="w-max">
       <div class="w-max flex items-center gap-2 select-none cursor-pointer hover:bg-black/10 transition-all px-3 py-1 rounded-full">
         <icon icon="tabler:arrow-left" class="text-xl" />
