@@ -17,21 +17,43 @@
       </router-link>
     </div>
     <div class="w-max h-max">
-      <div class="w-[150px] h-max flex justify-end">
-        <img
-          class="w-[35px] h-[35px] rounded-full cursor-pointer"
-          draggable="false"
-          src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+      <div class="relative w-[150px] h-max flex justify-end">
+        <div
+          class="w-[35px] h-[35px]"
+          @click.stop="handleToggleMenu(true)"
         >
+          <img
+            class="w-[35px] h-[35px] rounded-full cursor-pointer"
+            draggable="false"
+            src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+          >
+          <div
+            v-if="state.showMenu"
+            class="absolute w-max h-max top-[40px] right-0 bg-white rounded-md shadow-xl py-2"
+          >
+            <router-link
+              class="block px-5 py-2 hover:bg-zinc-100 select-none cursor-pointer font-semibold"
+              to="/profile"
+            >
+              Profile
+            </router-link>
+            <div class="px-5 py-2 hover:bg-zinc-100 select-none cursor-pointer font-semibold">Logout</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+  import { reactive, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
+
+  const state = reactive({
+    showMenu: false
+  })
 
   const menus = [
     {
@@ -50,4 +72,12 @@
       display: 'Karyawan'
     }
   ]
+
+  function handleToggleMenu (toggle) {
+    state.showMenu = toggle
+  }
+
+  onMounted(() => {
+    document.addEventListener('click', () => handleToggleMenu(false))
+  })
 </script>

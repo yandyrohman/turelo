@@ -28,6 +28,11 @@ const routes = createRouter({
       path: '/employee',
       component: () => import('./pages/Employee.vue')
     },
+    {
+      name: 'profile',
+      path: '/profile',
+      component: () => import('./pages/Profile.vue')
+    }
   ]
 })
 
