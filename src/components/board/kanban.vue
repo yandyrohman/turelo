@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[350px] h-full bg-white rounded-md flex flex-col">
+  <div class="shrink-0 w-[350px] h-full bg-white rounded-md flex flex-col">
     <div class="mx-5 my-2 font-bold text-zinc-500 select-none">
       {{ props.name }}
     </div>

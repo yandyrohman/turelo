@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <board-header />
-    <div class="w-full h-[calc(100%-130px)] flex justify-center px-[50px] space-x-10">
+    <div class="w-full h-[calc(100%-130px)] flex px-[50px] space-x-10 overflow-x-auto">
       <board-kanban
         name="Backlog"
         :cards="[]"
