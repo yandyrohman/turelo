@@ -13,11 +13,15 @@
           </div>
           <person-employee v-for="i in 5" />
         </div>
+        <div class="flex justify-center mt-8">
+          <pagination />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-  import personEmployee from '../components/employee/person.vue';
+  import pagination from '../components/pagination.vue'
+  import personEmployee from '../components/employee/person.vue'
 </script>
