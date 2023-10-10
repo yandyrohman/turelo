@@ -3,7 +3,12 @@
     <div class="w-full flex justify-center">
       <div class="w-[1100px] h-[100px] flex justify-between items-center">
         <div class="font-semibold select-none text-xl">List Karyawan</div>
-        <button class="px-5 py-2 bg-green-600 text-white font-semibold rounded-md">Tambah</button>
+        <button
+          class="px-5 py-2 bg-green-600 text-white font-semibold rounded-md"
+          @click="handleShowForm"
+        >
+          Tambah
+        </button>
       </div>
     </div>
     <div class="w-full flex justify-center">
@@ -16,7 +21,7 @@
             <div class="w-[16.25%] text-zinc-500">Status</div>
             <div class="w-[26.25%] text-zinc-500">Role System</div>
           </div>
-          <person-employee v-for="i in 5" />
+          <employee-person v-for="i in 5" />
         </div>
         <div class="flex justify-center mt-8">
           <pagination />
@@ -24,9 +29,21 @@
       </div>
     </div>
   </div>
+  <employee-form v-model:show="state.showForm" />
 </template>
 
 <script setup>
+  import { reactive } from 'vue'
+
   import pagination from '../components/pagination.vue'
-  import personEmployee from '../components/employee/person.vue'
+  import employeePerson from '../components/employee/person.vue'
+  import employeeForm from '../components/employee/form.vue'
+
+  const state = reactive({
+    showForm: false
+  })
+
+  function handleShowForm () {
+    state.showForm = true
+  }
 </script>
