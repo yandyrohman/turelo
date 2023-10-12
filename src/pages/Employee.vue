@@ -5,7 +5,7 @@
         <div class="font-semibold select-none text-xl">List Karyawan</div>
         <button
           class="px-5 py-2 bg-green-600 text-white font-semibold rounded-md"
-          @click="handleShowForm"
+          @click="handleAddEmployee"
         >
           Tambah
         </button>
@@ -23,7 +23,9 @@
           </div>
           <employee-person
             v-for="employee in state.employees"
+            :id="employee.id"
             :employee="employee"
+            @edit="handleEditEmployee"
           />
         </div>
       </div>
@@ -31,19 +33,22 @@
   </div>
   <employee-form
     v-model:show="state.showForm"
+    :employee="state.selectedEmployee"
     @submit="handleSubmitForm"
   />
 </template>
 
 <script setup>
   import { reactive, onMounted } from 'vue'
-  import { getEmployee, createEmployee } from '../services/employee'
+  import { getEmployee, createEmployee, updateEmployee } from '../services/employee'
 
   import employeePerson from '../components/employee/person.vue'
   import employeeForm from '../components/employee/form.vue'
 
   const state = reactive({
     employees: [],
+    selectedEmployee: {},
+    selectedId: '',
     showForm: false
   })
 
@@ -52,12 +57,24 @@
     state.employees = data
   }
 
-  function handleShowForm () {
+  function handleAddEmployee () {
+    state.selectedId = ''
+    state.selectedEmployee = {}
+    state.showForm = true
+  }
+
+  function handleEditEmployee (id, employee) {
+    state.selectedId = id
+    state.selectedEmployee = employee
     state.showForm = true
   }
 
   async function handleSubmitForm ({ picture, email, password, name, position, salary, status, role }) {
-    await createEmployee({ picture, email, password, name, position, salary, status, role })
+    if (state.selectedId) {
+      await updateEmployee(state.selectedId, { picture, email, password, name, position, salary, status, role })
+    } else {
+      await createEmployee({ picture, email, password, name, position, salary, status, role })
+    }
     state.showForm = false
     handleGetEmployee()
   }

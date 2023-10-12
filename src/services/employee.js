@@ -8,3 +8,7 @@ export function getEmployee () {
 export function createEmployee ({ picture, email, password, name, position, salary, status, role }) {
   return axios.post(`${baseUrl}/employee`, { picture, email, password, name, position, salary, status, role })
 }
+
+export function updateEmployee (id, { picture, email, password, name, position, salary, status, role }) {
+  return axios.post(`${baseUrl}/employee/${id}`, { picture, email, password, name, position, salary, status, role })
+}

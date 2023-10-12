@@ -68,7 +68,7 @@
           class="px-5 py-2 bg-green-600 text-white font-semibold rounded-md"
           @click="handleSubmit"
         >
-          Tambah
+          Simpan
         </button>
       </div>
     </div>
@@ -76,13 +76,17 @@
 </template>
 
 <script setup>
-  import { defineEmits, defineProps, reactive } from 'vue'
+  import { defineEmits, defineProps, reactive, watch } from 'vue'
   import photoForm from '../photo-form.vue'
 
   const props = defineProps({
     show: {
       type: Boolean,
       default: false
+    },
+    employee: {
+      type: Object,
+      default: () => ({})
     }
   })
 
@@ -107,11 +111,22 @@
     form.position = ''
     form.salary = null
     form.status = ''
-    form.role = 'user'
+    form.role = ''
     emit('update:show', false)
   }
 
   function handleSubmit () {
     emit('submit', form)
   }
+
+  watch(() => props.employee, () => {
+    form.picture = props.employee.picture || ''
+    form.email = props.employee.email || ''
+    form.password = props.employee.password || ''
+    form.name = props.employee.name || ''
+    form.position = props.employee.position || ''
+    form.salary = props.employee.salary || null
+    form.status = props.employee.status || ''
+    form.role = props.employee.role || ''
+  })
 </script>

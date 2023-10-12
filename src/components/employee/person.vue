@@ -30,7 +30,10 @@
       {{ props.employee.role }}
     </div>
     <div class="shrink-0 w-[10%] flex gap-4">
-      <div class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer">
+      <div
+        class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer"
+        @click="handleEdit"
+      >
         <icon icon="tabler:edit" class="text-xl text-zinc-500" />
       </div>
       <div class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer">
@@ -41,15 +44,21 @@
 </template>
 
 <script setup>
-  import { defineProps } from 'vue'
+  import { defineProps, defineEmits } from 'vue'
   import { Icon } from '@iconify/vue'
 
   const props = defineProps({
+    id: {
+      type: String,
+      default: ''
+    },
     employee: {
       type: Object,
       default: () => ({})
     }
   })
+
+  const emit = defineEmits(['edit'])
 
   function formatNumber (x) {
     if (x) {
@@ -57,5 +66,9 @@
     } else {
       return x
     }
+  }
+
+  function handleEdit () {
+    emit('edit', props.id, props.employee)
   }
 </script>
