@@ -9,8 +9,8 @@ async function getEmployee (req, res) {
 }
 
 async function createEmployee (req, res) {
-  const { email, password, name, position, salary, status, role } = req.body
-  await addDoc(collection(db, 'employees'), { email, password, name, position, salary, status, role })
+  const { picture, email, password, name, position, salary, status, role } = req.body
+  await addDoc(collection(db, 'employees'), { picture, email, password, name, position, salary, status, role })
   res.send(null)
 }
 

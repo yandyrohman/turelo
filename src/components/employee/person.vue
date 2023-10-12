@@ -2,9 +2,9 @@
   <div class="w-full bg-white flex px-5 select-none items-center py-4 border-b hover:bg-zinc-50">
     <div class="shrink-0 w-[25%] flex gap-4 pr-3 items-center">
       <img
-        class="shrink-0 w-[40px] h-[40px] rounded-full"
+        class="shrink-0 w-[40px] h-[40px] rounded-full object-cover"
         draggable="false"
-        src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+        :src="props.employee.picture"
       >
       <div class="w-full">
         <div class="w-full font-semibold line-clamp-1 break-all">
@@ -52,6 +52,10 @@
   })
 
   function formatNumber (x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    if (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    } else {
+      return x
+    }
   }
 </script>

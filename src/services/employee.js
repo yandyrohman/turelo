@@ -5,6 +5,6 @@ export function getEmployee () {
   return axios.get(`${baseUrl}/employee`)
 }
 
-export function createEmployee ({ email, password, name, position, salary, status, role }) {
-  return axios.post(`${baseUrl}/employee`, { email, password, name, position, salary, status, role })
+export function createEmployee ({ picture, email, password, name, position, salary, status, role }) {
+  return axios.post(`${baseUrl}/employee`, { picture, email, password, name, position, salary, status, role })
 }

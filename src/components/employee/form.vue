@@ -6,6 +6,7 @@
   >
     <div class="w-max h-max bg-white rounded-xl p-5 space-y-5">
       <div class="text-lg font-semibold">Tambah Karyawan</div>
+      <photo-form v-model="form.picture" />
       <input
         v-model="form.email"
         class="block w-[300px] h-[40px] border rounded-md px-5"
@@ -76,6 +77,7 @@
 
 <script setup>
   import { defineEmits, defineProps, reactive } from 'vue'
+  import photoForm from '../photo-form.vue'
 
   const props = defineProps({
     show: {
@@ -85,6 +87,7 @@
   })
 
   const form = reactive({
+    picture: '',
     email: '',
     password: '',
     name: '',
@@ -97,6 +100,14 @@
   const emit = defineEmits(['update:show', 'submit'])
 
   function handleClose () {
+    form.picture = ''
+    form.email = ''
+    form.password = ''
+    form.name = ''
+    form.position = ''
+    form.salary = null
+    form.status = ''
+    form.role = 'user'
     emit('update:show', false)
   }
 

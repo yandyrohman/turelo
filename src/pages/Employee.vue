@@ -56,8 +56,10 @@
     state.showForm = true
   }
 
-  function handleSubmitForm ({ email, password, name, position, salary, status, role }) {
-    createEmployee({ email, password, name, position, salary, status, role })
+  async function handleSubmitForm ({ picture, email, password, name, position, salary, status, role }) {
+    await createEmployee({ picture, email, password, name, position, salary, status, role })
+    state.showForm = false
+    handleGetEmployee()
   }
 
   onMounted(() => {
