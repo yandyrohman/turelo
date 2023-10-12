@@ -94,13 +94,13 @@
     role: 'user',
   })
 
-  const emit = defineEmits(['update:show'])
+  const emit = defineEmits(['update:show', 'submit'])
 
   function handleClose () {
     emit('update:show', false)
   }
 
   function handleSubmit () {
-    console.log(form)
+    emit('submit', form)
   }
 </script>

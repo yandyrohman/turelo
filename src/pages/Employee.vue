@@ -29,11 +29,15 @@
       </div>
     </div>
   </div>
-  <employee-form v-model:show="state.showForm" />
+  <employee-form
+    v-model:show="state.showForm"
+    @submit="handleSubmitForm"
+  />
 </template>
 
 <script setup>
   import { reactive } from 'vue'
+  import { createEmployee } from '../services/employee'
 
   import pagination from '../components/pagination.vue'
   import employeePerson from '../components/employee/person.vue'
@@ -45,5 +49,9 @@
 
   function handleShowForm () {
     state.showForm = true
+  }
+
+  function handleSubmitForm ({ name, email, position, salary, status, role }) {
+    createEmployee({ name, email, position, salary, status, role })
   }
 </script>
