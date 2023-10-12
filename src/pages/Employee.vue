@@ -21,10 +21,10 @@
             <div class="w-[16.25%] text-zinc-500">Status</div>
             <div class="w-[26.25%] text-zinc-500">Role System</div>
           </div>
-          <employee-person v-for="i in 5" />
-        </div>
-        <div class="flex justify-center mt-8">
-          <pagination />
+          <employee-person
+            v-for="employee in state.employees"
+            :employee="employee"
+          />
         </div>
       </div>
     </div>
@@ -36,22 +36,31 @@
 </template>
 
 <script setup>
-  import { reactive } from 'vue'
-  import { createEmployee } from '../services/employee'
+  import { reactive, onMounted } from 'vue'
+  import { getEmployee, createEmployee } from '../services/employee'
 
-  import pagination from '../components/pagination.vue'
   import employeePerson from '../components/employee/person.vue'
   import employeeForm from '../components/employee/form.vue'
 
   const state = reactive({
+    employees: [],
     showForm: false
   })
+
+  async function handleGetEmployee () {
+    const { data } = await getEmployee()
+    state.employees = data
+  }
 
   function handleShowForm () {
     state.showForm = true
   }
 
-  function handleSubmitForm ({ name, email, position, salary, status, role }) {
-    createEmployee({ name, email, position, salary, status, role })
+  function handleSubmitForm ({ email, password, name, position, salary, status, role }) {
+    createEmployee({ email, password, name, position, salary, status, role })
   }
+
+  onMounted(() => {
+    handleGetEmployee()
+  })
 </script>

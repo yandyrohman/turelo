@@ -1,10 +1,17 @@
 const db = require('./db')
-const { collection, addDoc } = require('firebase/firestore')
+const { collection, addDoc, getDocs } = require('firebase/firestore')
+
+async function getEmployee (req, res) {
+  const results = []
+  const snapshot = await getDocs(collection(db, 'employees'))
+  snapshot.forEach(doc => results.push(doc.data()))
+  res.send(results)
+}
 
 async function createEmployee (req, res) {
-  const { name, email, position, salary, status, role } = req.body
-  await addDoc(collection(db, 'employees'), { name, email, position, salary, status, role })
+  const { email, password, name, position, salary, status, role } = req.body
+  await addDoc(collection(db, 'employees'), { email, password, name, position, salary, status, role })
   res.send(null)
 }
 
-module.exports = { createEmployee }
+module.exports = { getEmployee, createEmployee }

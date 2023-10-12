@@ -8,26 +8,26 @@
       >
       <div class="w-full">
         <div class="w-full font-semibold line-clamp-1 break-all">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil quibusdam delectus ea asperiores incidunt quis possimus temporibus vero, amet natus aspernatur reiciendis, maxime dignissimos dolor quia, illo laboriosam architecto dolorem?
-          <!-- Yandi Rohman -->
+          {{ props.employee.name }}
         </div>
         <div class="text-sm text-zinc-500 line-clamp-1 break-all">
-          yandy.rhm@gmail.com
-          <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque consectetur labore quia recusandae eaque. Sequi corrupti vitae, perspiciatis laudantium, natus ut rerum optio nobis dolorem necessitatibus dolore incidunt eligendi sed. -->
+          {{ props.employee.email }}
         </div>
       </div>
     </div>
-    <div class="shrink-0 w-[16.25%]">
-      Frontend Dev
+    <div class="shrink-0 w-[16.25%] capitalize">
+      {{ props.employee.position }}
     </div>
     <div class="shrink-0 w-[16.25%]">
-      Rp 100.000.000
+      Rp {{ formatNumber(props.employee.salary) }}
     </div>
     <div class="shrink-0 w-[16.25%]">
-      Karyawan Tetap
+      <template v-if="props.employee.status === 'permanent'">Karyawan Tetap</template>
+      <template v-if="props.employee.status === 'contract'">Karyawan Kontrak</template>
+      <template v-if="props.employee.status === 'apprentice'">Karyawan Magang</template>
     </div>
-    <div class="shrink-0 w-[16.25%]">
-      Admin
+    <div class="shrink-0 w-[16.25%] capitalize">
+      {{ props.employee.role }}
     </div>
     <div class="shrink-0 w-[10%] flex gap-4">
       <div class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer">
@@ -41,5 +41,17 @@
 </template>
 
 <script setup>
+  import { defineProps } from 'vue'
   import { Icon } from '@iconify/vue'
+
+  const props = defineProps({
+    employee: {
+      type: Object,
+      default: () => ({})
+    }
+  })
+
+  function formatNumber (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  }
 </script>
