@@ -36,7 +36,10 @@
       >
         <icon icon="tabler:edit" class="text-xl text-zinc-500" />
       </div>
-      <div class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer">
+      <div
+        class="w-[40px] h-[30px] flex justify-center items-center hover:bg-zinc-200 rounded-md cursor-pointer"
+        @click="handleDelete"
+      >
         <icon icon="tabler:trash" class="text-xl text-zinc-500" />
       </div>
     </div>
@@ -46,6 +49,8 @@
 <script setup>
   import { defineProps, defineEmits } from 'vue'
   import { Icon } from '@iconify/vue'
+
+  import Swal from 'sweetalert2'
 
   const props = defineProps({
     id: {
@@ -58,7 +63,7 @@
     }
   })
 
-  const emit = defineEmits(['edit'])
+  const emit = defineEmits(['edit', 'delete'])
 
   function formatNumber (x) {
     if (x) {
@@ -70,5 +75,15 @@
 
   function handleEdit () {
     emit('edit', props.id, props.employee)
+  }
+
+  async function handleDelete () {
+    const { isConfirmed } = await Swal.fire({
+      title: 'Hapus karyawan ini?',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      cancelButtonText: 'Batal'
+    })
+    if (isConfirmed) emit('delete', props.id)
   }
 </script>

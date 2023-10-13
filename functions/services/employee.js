@@ -1,5 +1,5 @@
 const db = require('./db')
-const { collection, addDoc, getDocs, setDoc, doc } = require('firebase/firestore')
+const { collection, addDoc, getDocs, setDoc, deleteDoc, doc } = require('firebase/firestore')
 
 async function getEmployee (req, res) {
   const results = []
@@ -24,4 +24,10 @@ async function updateEmployee (req, res) {
   res.send(null)
 }
 
-module.exports = { getEmployee, createEmployee, updateEmployee }
+async function deleteEmployee (req, res) {
+  const id = req.params.id
+  await deleteDoc(doc(db, 'employees', id))
+  res.send(null)
+}
+
+module.exports = { getEmployee, createEmployee, updateEmployee, deleteEmployee }

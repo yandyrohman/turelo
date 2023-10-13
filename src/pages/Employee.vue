@@ -26,6 +26,7 @@
             :id="employee.id"
             :employee="employee"
             @edit="handleEditEmployee"
+            @delete="handleDeleteEmploye"
           />
         </div>
       </div>
@@ -40,7 +41,7 @@
 
 <script setup>
   import { reactive, onMounted } from 'vue'
-  import { getEmployee, createEmployee, updateEmployee } from '../services/employee'
+  import { getEmployee, createEmployee, updateEmployee, deleteEmployee } from '../services/employee'
 
   import employeePerson from '../components/employee/person.vue'
   import employeeForm from '../components/employee/form.vue'
@@ -67,6 +68,11 @@
     state.selectedId = id
     state.selectedEmployee = employee
     state.showForm = true
+  }
+
+  async function handleDeleteEmploye (id) {
+    await deleteEmployee(id)
+    handleGetEmployee()
   }
 
   async function handleSubmitForm ({ picture, email, password, name, position, salary, status, role }) {
