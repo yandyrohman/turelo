@@ -26,6 +26,7 @@ async function updateEmployee (req, res) {
 
 async function deleteEmployee (req, res) {
   const id = req.params.id
+  console.log(id)
   await deleteDoc(doc(db, 'employees', id))
   res.send(null)
 }

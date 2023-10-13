@@ -9,6 +9,7 @@ app.use(express.json())
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   next()
 })
 
@@ -16,8 +17,8 @@ app.get('/', (req, res) => res.send('service running'))
 
 app.get('/employee', getEmployee)
 app.post('/employee', createEmployee)
-app.post('/employee/:id', updateEmployee)
-app.delete('/employee/:id', () => deleteEmployee)
+app.put('/employee/:id', updateEmployee)
+app.delete('/employee/:id', deleteEmployee)
 
 app.listen(8080, () => console.log('running on port 8080'))
 

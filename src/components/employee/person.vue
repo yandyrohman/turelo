@@ -79,9 +79,11 @@
 
   async function handleDelete () {
     const { isConfirmed } = await Swal.fire({
+      icon: 'warning',
       title: 'Hapus karyawan ini?',
       showCancelButton: true,
       confirmButtonText: 'Ya, Hapus',
+      confirmButtonColor: '#D32F2F',
       cancelButtonText: 'Batal'
     })
     if (isConfirmed) emit('delete', props.id)

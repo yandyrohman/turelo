@@ -10,7 +10,7 @@ export function createEmployee ({ picture, email, password, name, position, sala
 }
 
 export function updateEmployee (id, { picture, email, password, name, position, salary, status, role }) {
-  return axios.post(`${baseUrl}/employee/${id}`, { picture, email, password, name, position, salary, status, role })
+  return axios.put(`${baseUrl}/employee/${id}`, { picture, email, password, name, position, salary, status, role })
 }
 
 export function deleteEmployee (id) {
