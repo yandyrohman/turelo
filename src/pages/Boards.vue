@@ -4,19 +4,20 @@
     <div class="w-full flex justify-center">
       <div class="w-[1000px] h-max grid grid-cols-3 gap-[40px]">
         <router-link
-          v-for="i in 8"
+          v-for="board in state.boards"
+          :key="board._id"
           class="relative w-full h-[180px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer select-none"
-          to="/board/abc"
+          :to="'/board/' + board.id"
         >
           <img
             class="absolute w-full h-full object-cover top-0 left-0"
             draggable="false"
-            src="https://images.unsplash.com/photo-1696587522065-7ea3e7ac033f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            :src="board.picture"
           >
           <div class="absolute w-full h-full top-0 left-0 z-10 p-3 flex flex-col justify-between">
             <div class="w-max max-w-full px-3 py-1 bg-white/50 rounded-[10px] select-none">
               <span class="line-clamp-2 font-semibold break-all">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi assumenda repudiandae quisquam sunt laboriosam veritatis voluptatem quod? Enim, libero. Perspiciatis ratione sit, sapiente magni temporibus officiis veniam quaerat nulla voluptas.
+                {{ board.name }}
               </span>
             </div>
             <div class="w-max flex px-3 py-1 bg-white/50 rounded-[10px] space-x-[-10px] select-none">
@@ -32,14 +33,62 @@
             </div>
           </div>
         </router-link>
-        <div class="w-full h-[180px] rounded-lg transition-all bg-black/5 border-2 border-dashed border-zinc-400 select-none cursor-pointer hover:bg-black/10 flex justify-center items-center">
+        <div
+          class="w-full h-[180px] rounded-lg transition-all bg-black/5 border-2 border-dashed border-zinc-400 select-none cursor-pointer hover:bg-black/10 flex justify-center items-center"
+          @click="handleAddBoard"
+        >
           <icon icon="tabler:plus" class="text-[40px] text-zinc-500" />
         </div>
       </div>
     </div>
   </div>
+  <board-form
+    v-model:show="state.showForm"
+    :employee="state.selectBoard"
+    @submit="handleSubmitForm"
+  />
 </template>
 
 <script setup>
+  import { reactive, onMounted } from 'vue'
   import { Icon } from '@iconify/vue'
+  import { createBoard, getBoard } from '../services/board'
+
+  import boardForm from '../components/board/form.vue'
+
+  const state = reactive({
+    boards: [],
+    selectBoard: {},
+    selectedId: '',
+    showForm: false
+  })
+
+  async function handleGetBoard () {
+    const { data } = await getBoard()
+    console.log(data)
+    state.boards = data
+  }
+
+  function handleAddBoard () {
+    state.selectedId = ''
+    state.selectBoard = {}
+    state.showForm = true
+  }
+
+  async function handleSubmitForm ({ picture, name }) {
+    await createBoard({ picture, name })
+    state.showForm = false
+    handleGetBoard()
+    // if (state.selectedId) {
+    //   await updateEmployee(state.selectedId, { picture, email, password, name, position, salary, status, role })
+    // } else {
+    //   await createEmployee({ picture, email, password, name, position, salary, status, role })
+    // }
+    // state.showForm = false
+    // handleGetEmployee()
+  }
+
+  onMounted(() => {
+    handleGetBoard()
+  })
 </script>

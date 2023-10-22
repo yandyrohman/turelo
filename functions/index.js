@@ -2,6 +2,7 @@ const functions = require('firebase-functions')
 const express = require('express')
 
 const { getEmployee, createEmployee, updateEmployee, deleteEmployee } = require('./services/employee')
+const { createBoard, getBoard } = require('./services/board')
 
 const app = express()
 
@@ -19,6 +20,9 @@ app.get('/employee', getEmployee)
 app.post('/employee', createEmployee)
 app.put('/employee/:id', updateEmployee)
 app.delete('/employee/:id', deleteEmployee)
+
+app.get('/board', getBoard)
+app.post('/board', createBoard)
 
 app.listen(8080, () => console.log('running on port 8080'))
 
