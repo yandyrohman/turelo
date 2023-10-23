@@ -117,6 +117,7 @@
 
   function handleSubmit () {
     emit('submit', form)
+    handleClose()
   }
 
   watch(() => props.employee, () => {

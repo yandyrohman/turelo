@@ -9,7 +9,7 @@
       <input
         v-model="form.title"
         class="block w-[300px] h-[40px] border rounded-md px-5"
-        placeholder="Masukan Nama Board"
+        placeholder="Masukan Judul Pekerjaan"
       >
       <input
         v-model="form.point"
@@ -19,7 +19,7 @@
       >
       <textarea
         v-model="form.description"
-        placeholder="Tulis deskripsi"
+        placeholder="Tulis Deskripsi Pekerjaan"
         class="block w-[300px] h-[100px] border rounded-md px-5 py-2 outline-none"
       />
       <div class="w-full flex gap-3 justify-end pt-5">
@@ -71,6 +71,7 @@
 
   function handleSubmit () {
     emit('submit', form)
+    handleClose()
   }
 
   watch(() => props.card, () => {

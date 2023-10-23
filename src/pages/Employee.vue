@@ -81,7 +81,6 @@
     } else {
       await createEmployee({ picture, email, password, name, position, salary, status, role })
     }
-    state.showForm = false
     handleGetEmployee()
   }
 

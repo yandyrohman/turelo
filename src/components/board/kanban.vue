@@ -45,13 +45,17 @@
     </div>
   </div>
   <teleport to="body">
-    <kanban-form v-model:show="state.showForm" />
+    <kanban-form
+      v-model:show="state.showForm"
+      @submit="handleSubmitForm"
+    />
   </teleport>
 </template>
 
 <script setup>
   import { defineProps, reactive } from 'vue'
   import { Icon } from '@iconify/vue'
+  import { createCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
 
@@ -72,6 +76,12 @@
 
   function handleShowForm () {
     state.showForm = true
+  }
+
+  async function handleSubmitForm ({ title, description, point }) {
+    const status = 'backlog'
+    await createCard({ title, description, point, status })
+    // handleGetBoard()
   }
 </script>
 

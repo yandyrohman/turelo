@@ -75,7 +75,6 @@
 
   async function handleSubmitForm ({ picture, name }) {
     await createBoard({ picture, name })
-    state.showForm = false
     handleGetBoard()
   }
 
