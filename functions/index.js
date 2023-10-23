@@ -24,6 +24,6 @@ app.delete('/employee/:id', deleteEmployee)
 app.get('/board', getBoard)
 app.post('/board', createBoard)
 
-app.listen(6666, () => console.log('running on port 6666'))
+app.listen(8080, () => console.log('running on port 8080'))
 
 exports.app = functions.https.onRequest(app)
