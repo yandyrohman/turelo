@@ -64,7 +64,6 @@
 
   async function handleGetBoard () {
     const { data } = await getBoard()
-    console.log(data)
     state.boards = data
   }
 

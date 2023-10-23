@@ -53,9 +53,9 @@
 </template>
 
 <script setup>
-  import { defineProps, reactive } from 'vue'
+  import { defineProps, reactive, onMounted } from 'vue'
   import { Icon } from '@iconify/vue'
-  import { createCard } from '../../services/kanban'
+  import { getCard, createCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
 
@@ -71,6 +71,7 @@
   })
 
   const state = reactive({
+    cards: [],
     showForm: false
   })
 
@@ -78,11 +79,21 @@
     state.showForm = true
   }
 
+  async function handleGetCard () {
+    const { data } = await getCard()
+    console.log(data)
+    state.boards = data
+  }
+
   async function handleSubmitForm ({ title, description, point }) {
     const status = 'backlog'
     await createCard({ title, description, point, status })
     // handleGetBoard()
   }
+
+  onMounted(() => {
+    handleGetCard()
+  })
 </script>
 
 <style>

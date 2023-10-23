@@ -1,15 +1,15 @@
 const db = require('./db')
 const { collection, addDoc, getDocs, setDoc, deleteDoc, doc } = require('firebase/firestore')
 
-// async function getBoard (req, res) {
-//   const results = []
-//   const snapshot = await getDocs(collection(db, 'boards'))
-//   snapshot.forEach(doc => results.push({
-//     id: doc.id,
-//     ...doc.data()
-//   }))
-//   res.send(results)
-// }
+async function getCard (req, res) {
+  const results = []
+  const snapshot = await getDocs(collection(db, 'cards'))
+  snapshot.forEach(doc => results.push({
+    id: doc.id,
+    ...doc.data()
+  }))
+  res.send(results)
+}
 
 async function createCard (req, res) {
   const { title, description, point, status } = req.body
@@ -17,4 +17,4 @@ async function createCard (req, res) {
   res.send(null)
 }
 
-module.exports = { createCard }
+module.exports = { getCard, createCard }
