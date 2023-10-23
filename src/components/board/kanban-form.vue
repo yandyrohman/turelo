@@ -6,12 +6,22 @@
   >
     <div class="w-max h-max bg-white rounded-xl p-5 space-y-5">
       <div class="text-lg font-semibold">Tambah Card</div>
-      <photo-form v-model="form.picture" />
       <input
-        v-model="form.name"
+        v-model="form.title"
         class="block w-[300px] h-[40px] border rounded-md px-5"
         placeholder="Masukan Nama Board"
       >
+      <input
+        v-model="form.point"
+        class="block w-[300px] h-[40px] border rounded-md px-5"
+        placeholder="Masukan Jumlah Point"
+        type="number"
+      >
+      <textarea
+        v-model="form.description"
+        placeholder="Tulis deskripsi"
+        class="block w-[300px] h-[100px] border rounded-md px-5 py-2 outline-none"
+      />
       <div class="w-full flex gap-3 justify-end pt-5">
         <button
           class="px-5 py-2 bg-white border font-semibold rounded-md"
@@ -32,29 +42,30 @@
 
 <script setup>
   import { defineEmits, defineProps, reactive, watch } from 'vue'
-  import photoForm from '../photo-form.vue'
 
   const props = defineProps({
     show: {
       type: Boolean,
       default: false
     },
-    board: {
+    card: {
       type: Object,
       default: () => ({})
     }
   })
 
   const form = reactive({
-    picture: '',
-    name: '',
+    title: '',
+    description: '',
+    point: null
   })
 
   const emit = defineEmits(['update:show', 'submit'])
 
   function handleClose () {
-    form.picture = ''
-    form.name = ''
+    form.title = ''
+    form.description = ''
+    form.point = null
     emit('update:show', false)
   }
 
@@ -62,8 +73,9 @@
     emit('submit', form)
   }
 
-  watch(() => props.board, () => {
-    form.picture = props.board.picture || ''
-    form.name = props.board.name || ''
+  watch(() => props.card, () => {
+    form.title = props.card.title || ''
+    form.description = props.card.description || ''
+    form.point = props.card.point || null
   })
 </script>

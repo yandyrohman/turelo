@@ -59,7 +59,6 @@
   const state = reactive({
     boards: [],
     selectBoard: {},
-    selectedId: '',
     showForm: false
   })
 
@@ -70,7 +69,6 @@
   }
 
   function handleAddBoard () {
-    state.selectedId = ''
     state.selectBoard = {}
     state.showForm = true
   }
@@ -79,13 +77,6 @@
     await createBoard({ picture, name })
     state.showForm = false
     handleGetBoard()
-    // if (state.selectedId) {
-    //   await updateEmployee(state.selectedId, { picture, email, password, name, position, salary, status, role })
-    // } else {
-    //   await createEmployee({ picture, email, password, name, position, salary, status, role })
-    // }
-    // state.showForm = false
-    // handleGetEmployee()
   }
 
   onMounted(() => {

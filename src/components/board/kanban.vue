@@ -35,17 +35,22 @@
       </div>
     </div>
     <div class="w-full p-3">
-      <div class="w-full py-1 px-5 flex gap-2 items-center hover:bg-zinc-100 cursor-pointer select-none rounded-md text-zinc-600">
+      <div
+        class="w-full py-1 px-5 flex gap-2 items-center hover:bg-zinc-100 cursor-pointer select-none rounded-md text-zinc-600"
+        @click="handleShowForm"
+      >
         <icon icon="tabler:plus" />
         <span class="font-[500]">Tambah Card</span>
       </div>
     </div>
   </div>
-  <kanban-form />
+  <teleport to="body">
+    <kanban-form v-model:show="state.showForm" />
+  </teleport>
 </template>
 
 <script setup>
-  import { defineProps } from 'vue'
+  import { defineProps, reactive } from 'vue'
   import { Icon } from '@iconify/vue'
   
   import kanbanForm from './kanban-form.vue'
@@ -60,6 +65,14 @@
       default: () => ([])
     }
   })
+
+  const state = reactive({
+    showForm: false
+  })
+
+  function handleShowForm () {
+    state.showForm = true
+  }
 </script>
 
 <style>
