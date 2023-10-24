@@ -7,12 +7,16 @@
       {{ props.name }}
     </div>
     <div class="w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin space-y-3 pb-5 px-3">
-      <div v-if="cardOverThisKanban" class="w-full h-[150px] bg-zinc-200 rounded-md"></div>
+      <div
+        v-if="cardOverThisKanban && props.dragover"
+        class="w-full h-[150px] bg-zinc-200 rounded-md"
+      />
       <kanban-card
         v-for="card in state.cards"
         :key="card.id"
         :card="card"
         @drag="handleDrag"
+        @release="handleRelease"
       />
     </div>
     <div class="w-full p-3">
@@ -54,6 +58,10 @@
       type: String,
       default: null
     },
+    dragover: {
+      type: Boolean,
+      default: false,
+    },
     dragCard: {
       type: Object,
       default: () => ({})
@@ -93,6 +101,10 @@
 
   function handleDrag (card) {
     emit('drag', card)
+  }
+
+  function handleRelease () {
+    emit('release')
   }
 
   onMounted(() => {

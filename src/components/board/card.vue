@@ -65,7 +65,7 @@
     }
   })
 
-  const emit = defineEmits(['drag'])
+  const emit = defineEmits(['drag', 'release'])
 
   function handleDragStart (event) {
     const card = document.getElementById(id.value)
@@ -85,6 +85,7 @@
 
   function handleDragEnd () {
     cardMove.value = false
+    emit('release')
   }
 
   function handleDragMove (event) {
