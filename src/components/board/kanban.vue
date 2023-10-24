@@ -4,7 +4,11 @@
       {{ props.name }}
     </div>
     <div class="w-full h-full overflow-y-auto scrollbar-thin space-y-3 pb-5 px-3">
-      <kanban-card v-for="i in 1" />
+      <kanban-card
+        v-for="card in state.cards"
+        :key="card.id"
+        :card="card"
+      />
     </div>
     <div class="w-full p-3">
       <div
@@ -37,9 +41,9 @@
       type: String,
       default: ''
     },
-    cards: {
-      type: Array,
-      default: () => ([])
+    status: {
+      type: String,
+      default: ''
     }
   })
 
@@ -54,14 +58,15 @@
 
   async function handleGetCard () {
     const { data } = await getCard()
-    console.log(data)
-    state.boards = data
+    const filteredData = data.filter(d => d.status === props.status).sort((a, b) => a.timestamp - b.timestamp)
+    console.log(filteredData)
+    state.cards = filteredData
   }
 
   async function handleSubmitForm ({ title, description, point }) {
-    const status = 'backlog'
+    const status = props.status
     await createCard({ title, description, point, status })
-    // handleGetBoard()
+    handleGetCard()
   }
 
   onMounted(() => {

@@ -9,14 +9,13 @@
     @mouseup="handleDragEnd"
   >
     <div class="w-max h-max bg-black/10 rounded-full font-semibold text-sm text-zinc-500 select-none px-2">
-      10 Poin
+      {{ props.card.point }} Poin
     </div>
     <div class="w-full line-clamp-2 font-semibold text-xl leading-tight py-1">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex blanditiis deserunt suscipit eum quidem sunt molestiae sint, repudiandae repellendus illo magnam quasi molestias. Sed magni corrupti vitae dolorum aliquam optio!
+      {{ props.card.title }}
     </div>
     <div class="text-sm text-zinc-500 line-clamp-4">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus libero cumque tempora possimus in doloremque ea nesciunt pariatur corrupti provident corporis vel exercitationem error recusandae quia dolorem animi, ipsa soluta!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus libero cumque tempora possimus in doloremque ea nesciunt pariatur corrupti provident corporis vel exercitationem error recusandae quia dolorem animi, ipsa soluta!
+      {{ props.card.description }}
     </div>
     <div class="w-max flex gap-1 pt-2">
       <img
@@ -36,8 +35,15 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue'
+  import { computed, ref, defineProps } from 'vue'
   import { Icon } from '@iconify/vue'
+
+  const props = defineProps({
+    card: {
+      type: Object,
+      default: () => ({})
+    }
+  })
 
   const cardX = ref(0)
   const cardY = ref(0)

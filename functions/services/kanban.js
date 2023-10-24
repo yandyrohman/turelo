@@ -13,7 +13,8 @@ async function getCard (req, res) {
 
 async function createCard (req, res) {
   const { title, description, point, status } = req.body
-  await addDoc(collection(db, 'cards'), { title, description, point, status })
+  const timestamp = Date.now()
+  await addDoc(collection(db, 'cards'), { title, description, point, status, timestamp })
   res.send(null)
 }
 
