@@ -6,7 +6,7 @@
         name="Backlog"
         :cards="[]"
       />
-      <board-kanban
+      <!-- <board-kanban
         name="Dalam Pengerjaan"
         :cards="[]"
       />
@@ -17,7 +17,7 @@
       <board-kanban
         name="Selesai"
         :cards="[]"
-      />
+      /> -->
     </div>
   </div>
 </template>
