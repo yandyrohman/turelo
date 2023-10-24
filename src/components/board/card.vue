@@ -1,6 +1,6 @@
 <template>
   <div
-    id="card-0"
+    :id="id"
     class="bg-white p-5 rounded-md shadow-md border border-zinc-100 select-none cursor-pointer space-y-2 hover:bg-zinc-50"
     :class="{ 'fixed': cardMove }"
     :style="cardDynamicMove"
@@ -53,6 +53,10 @@
 
   const cardMove = ref(false)
 
+  const id = computed(() => {
+    return `card-${props.card.id}`
+  })
+
   const cardDynamicMove = computed(() => {
     if (cardWidth.value && cardHeight.value) {
       return `left: ${cardX.value}px; top: ${cardY.value}px; width: ${cardWidth.value}px; height: ${cardHeight.value}px;`
@@ -62,7 +66,7 @@
   })
 
   function handleDragStart (event) {
-    const card = document.getElementById('card-0')
+    const card = document.getElementById(id.value)
     const cardStyle = getComputedStyle(card)
     const cardWidthRaw = Number(cardStyle.width.replace('px', ''))
     const cardHeightRaw = Number(cardStyle.height.replace('px', ''))
@@ -83,7 +87,7 @@
 
   function handleDragMove (event) {
     if (cardMove.value) {
-      const card = document.getElementById('card-0')
+      const card = document.getElementById(id.value)
       const cardStyle = getComputedStyle(card)
       const cardWidthRaw = Number(cardStyle.width.replace('px', ''))
       const cardHeightRaw = Number(cardStyle.height.replace('px', ''))
