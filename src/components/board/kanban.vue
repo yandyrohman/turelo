@@ -1,13 +1,18 @@
 <template>
-  <div class="shrink-0 w-[350px] h-full bg-white rounded-md flex flex-col">
+  <div
+    :id="id"
+    class="shrink-0 w-[350px] h-full bg-white rounded-md flex flex-col"
+  >
     <div class="mx-5 my-2 font-bold text-zinc-500 select-none">
       {{ props.name }}
     </div>
-    <div class="w-full h-full overflow-y-auto scrollbar-thin space-y-3 pb-5 px-3">
+    <div class="w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin space-y-3 pb-5 px-3">
+      <div v-if="cardOverThisKanban" class="w-full h-[150px] bg-zinc-200 rounded-md"></div>
       <kanban-card
         v-for="card in state.cards"
         :key="card.id"
         :card="card"
+        @drag="handleDrag"
       />
     </div>
     <div class="w-full p-3">
@@ -29,7 +34,7 @@
 </template>
 
 <script setup>
-  import { defineProps, reactive, onMounted } from 'vue'
+  import { defineProps, defineEmits, reactive, onMounted, computed } from 'vue'
   import { Icon } from '@iconify/vue'
   import { getCard, createCard } from '../../services/kanban'
   
@@ -44,6 +49,14 @@
     status: {
       type: String,
       default: ''
+    },
+    hoverKanban: {
+      type: String,
+      default: null
+    },
+    dragCard: {
+      type: Object,
+      default: () => ({})
     }
   })
 
@@ -52,6 +65,16 @@
     showForm: false
   })
 
+  const cardOverThisKanban = computed(() => {
+    return props.status === props.hoverKanban
+  })
+
+  const id = computed(() => {
+    return `kanban-${props.status}`
+  })
+
+  const emit = defineEmits(['drag', 'release'])
+
   function handleShowForm () {
     state.showForm = true
   }
@@ -59,7 +82,6 @@
   async function handleGetCard () {
     const { data } = await getCard()
     const filteredData = data.filter(d => d.status === props.status).sort((a, b) => a.timestamp - b.timestamp)
-    console.log(filteredData)
     state.cards = filteredData
   }
 
@@ -67,6 +89,10 @@
     const status = props.status
     await createCard({ title, description, point, status })
     handleGetCard()
+  }
+
+  function handleDrag (card) {
+    emit('drag', card)
   }
 
   onMounted(() => {

@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-  import { computed, ref, defineProps } from 'vue'
+  import { computed, ref, defineProps, defineEmits } from 'vue'
   import { Icon } from '@iconify/vue'
 
   const props = defineProps({
@@ -64,6 +64,8 @@
       return `left: ${cardX.value}px; top: ${cardY.value}px;`
     }
   })
+
+  const emit = defineEmits(['drag'])
 
   function handleDragStart (event) {
     const card = document.getElementById(id.value)
@@ -94,6 +96,8 @@
 
       cardX.value = event.pageX - (cardWidthRaw / 2)
       cardY.value = event.pageY - (cardHeightRaw / 2)
+
+      emit('drag', props.card)
     }
   }
 </script>
