@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-  import { defineProps, defineEmits, reactive, onMounted, computed } from 'vue'
+  import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
   import { Icon } from '@iconify/vue'
   import { getCard, createCard } from '../../services/kanban'
   
@@ -106,6 +106,29 @@
   function handleRelease () {
     emit('release')
   }
+
+  function handleEjectThisKanbanIfMatch () {
+    const fromKanban = props.dragCard.status
+    const isEjectOnThisKanban = fromKanban === props.status
+    if (isEjectOnThisKanban) {
+      console.log('eject ', props.status)
+      state.cards = state.cards.filter(c => c.id !== props.dragCard.id)
+    }
+  }
+
+  function handleInsertThisKanbanIfMatch () {
+    if (cardOverThisKanban.value) {
+      const insertCard = {...props.dragCard, status: props.status}
+      state.cards = [insertCard].concat(state.cards)
+    }
+  }
+
+  watch(() => props.dragover, () => {
+    if (props.dragover === false) {
+      handleEjectThisKanbanIfMatch()
+      handleInsertThisKanbanIfMatch()
+    }
+  })
 
   onMounted(() => {
     handleGetCard()
