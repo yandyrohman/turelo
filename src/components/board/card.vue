@@ -7,9 +7,21 @@
     @mousedown="handleDragStart"
     @mousemove="handleDragMove"
     @mouseup="handleDragEnd"
+    @mouseover="() => cardHover = true"
+    @mouseleave="() => cardHover = false"
   >
-    <div class="w-max h-max bg-black/10 rounded-full font-semibold text-sm text-zinc-500 select-none px-2">
-      {{ props.card.point }} Poin
+    <div class="w-full flex items-center justify-between">
+      <div class="w-max h-max bg-black/10 rounded-full font-semibold text-sm text-zinc-500 select-none px-2">
+        {{ props.card.point }} Poin
+      </div>
+      <div
+        v-if="cardHover"
+        class="w-[30px] h-[30px] flex justify-center items-center bg-zinc-200 rounded-md hover:bg-zinc-300"
+        @mousedown.stop
+        @click.stop="handleShowDetail"
+      >
+        <icon icon="tabler:circle-arrow-up-right-filled" class="text-2xl text-zinc-600" />
+      </div>
     </div>
     <div class="w-full line-clamp-2 font-semibold text-xl leading-tight py-1">
       {{ props.card.title }}
@@ -32,11 +44,16 @@
       </div>
     </div>
   </div>
+  <teleport to="body">
+    <card-detail v-model:show="cardDetailShow" />
+  </teleport>
 </template>
 
 <script setup>
   import { computed, ref, defineProps, defineEmits } from 'vue'
   import { Icon } from '@iconify/vue'
+
+  import cardDetail from './card-detail.vue'
 
   const props = defineProps({
     card: {
@@ -52,6 +69,8 @@
   const cardHeight = ref(0)
 
   const cardMove = ref(false)
+  const cardHover = ref(false)
+  const cardDetailShow = ref(false)
 
   const id = computed(() => {
     return `card-${props.card.id}`
@@ -86,6 +105,10 @@
   function handleDragEnd () {
     cardMove.value = false
     emit('release')
+  }
+
+  function handleShowDetail () {
+    cardDetailShow.value = true
   }
 
   function handleDragMove (event) {
