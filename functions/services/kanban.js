@@ -1,5 +1,5 @@
 const db = require('./db')
-const { collection, addDoc, getDocs, setDoc, deleteDoc, doc } = require('firebase/firestore')
+const { collection, addDoc, getDocs, updateDoc, deleteDoc, doc } = require('firebase/firestore')
 
 async function getCard (req, res) {
   const results = []
@@ -18,4 +18,11 @@ async function createCard (req, res) {
   res.send(null)
 }
 
-module.exports = { getCard, createCard }
+async function updateStatusCard (req, res) {
+  const id = req.params.id
+  const { status } = req.body
+  await updateDoc(doc(db, 'cards', id), { status })
+  res.send(null)
+}
+
+module.exports = { getCard, createCard, updateStatusCard }

@@ -3,7 +3,7 @@ const express = require('express')
 
 const { getEmployee, createEmployee, updateEmployee, deleteEmployee } = require('./services/employee')
 const { getBoard, createBoard } = require('./services/board')
-const { getCard, createCard } = require('./services/kanban')
+const { getCard, createCard, updateStatusCard } = require('./services/kanban')
 
 const app = express()
 
@@ -27,6 +27,7 @@ app.post('/board', createBoard)
 
 app.get('/card', getCard)
 app.post('/card', createCard)
+app.put('/card/:id/status', updateStatusCard)
 
 app.listen(8080, () => console.log('running on port 8080'))
 

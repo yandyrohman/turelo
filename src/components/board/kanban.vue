@@ -40,7 +40,7 @@
 <script setup>
   import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
   import { Icon } from '@iconify/vue'
-  import { getCard, createCard } from '../../services/kanban'
+  import { getCard, createCard, updateStatusCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
   import kanbanCard from './card.vue'
@@ -111,8 +111,10 @@
     const fromKanban = props.dragCard.status
     const isEjectOnThisKanban = fromKanban === props.status
     if (isEjectOnThisKanban) {
-      console.log('eject ', props.status)
-      state.cards = state.cards.filter(c => c.id !== props.dragCard.id)
+      const cardEjectId = props.dragCard.id
+      const newStatus = props.hoverKanban
+      state.cards = state.cards.filter(c => c.id !== cardEjectId)
+      updateStatusCard(cardEjectId, newStatus)
     }
   }
 
