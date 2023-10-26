@@ -32,4 +32,10 @@ async function updateStatusCard (req, res) {
   res.send(null)
 }
 
-module.exports = { getCard, createCard, updateCard, updateStatusCard }
+async function deleteCard (req, res) {
+  const id = req.params.id
+  await deleteDoc(doc(db, 'cards', id))
+  res.send(null)
+}
+
+module.exports = { getCard, createCard, updateCard, updateStatusCard, deleteCard }

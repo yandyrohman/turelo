@@ -18,6 +18,7 @@
         @drag="handleDrag"
         @release="handleRelease"
         @edit="handleEditCard"
+        @delete="handleDeleteCard"
       />
     </div>
     <div class="w-full p-3">
@@ -42,7 +43,7 @@
 <script setup>
   import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
   import { Icon } from '@iconify/vue'
-  import { getCard, createCard, updateCard, updateStatusCard } from '../../services/kanban'
+  import { getCard, createCard, updateCard, updateStatusCard, deleteCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
   import kanbanCard from './card.vue'
@@ -136,6 +137,11 @@
       const insertCard = {...props.dragCard, status: props.status}
       state.cards = [insertCard].concat(state.cards)
     }
+  }
+
+  async function handleDeleteCard (cardId) {
+    await deleteCard(cardId)
+    handleGetCard()
   }
 
   watch(() => props.dragover, () => {

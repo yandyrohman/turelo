@@ -16,3 +16,7 @@ export function updateCard (id, { title, description, point }) {
 export function updateStatusCard (id, status) {
   return axios.put(`${baseUrl}/card/${id}/status`, { status })
 }
+
+export function deleteCard (id) {
+  return axios.delete(`${baseUrl}/card/${id}`)
+}

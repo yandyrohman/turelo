@@ -14,7 +14,10 @@
           >
             <icon icon="tabler:edit" />
           </div>
-          <div class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md">
+          <div
+            class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md"
+            @click="handleDelete"
+          >
             <icon icon="tabler:trash" />
           </div>
         </div>
@@ -50,6 +53,8 @@
   import { defineEmits, defineProps } from 'vue'
   import { Icon } from '@iconify/vue'
 
+  import Swal from 'sweetalert2'
+
   const props = defineProps({
     show: {
       type: Boolean,
@@ -61,7 +66,7 @@
     }
   })
 
-  const emit = defineEmits(['update:show', 'edit'])
+  const emit = defineEmits(['update:show', 'edit', 'delete'])
 
   function handleClose () {
     emit('update:show', false)
@@ -70,5 +75,21 @@
   function handleEdit () {
     emit('edit', props.card)
     emit('update:show', false)
+  }
+
+  async function handleDelete () {
+    const { isConfirmed } = await Swal.fire({
+      icon: 'warning',
+      title: 'Hapus card ini?',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      confirmButtonColor: '#D32F2F',
+      cancelButtonText: 'Batal'
+    })
+    
+    if (isConfirmed) {
+      emit('delete', props.card.id)
+      emit('update:show', false)
+    } 
   }
 </script>
