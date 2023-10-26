@@ -45,7 +45,10 @@
     </div>
   </div>
   <teleport to="body">
-    <card-detail v-model:show="cardDetailShow" />
+    <card-detail
+      v-model:show="cardDetailShow"
+      :card="cardSelected"
+    />
   </teleport>
 </template>
 
@@ -71,6 +74,8 @@
   const cardMove = ref(false)
   const cardHover = ref(false)
   const cardDetailShow = ref(false)
+
+  const cardSelected = ref({})
 
   const id = computed(() => {
     return `card-${props.card.id}`
@@ -108,6 +113,7 @@
   }
 
   function handleShowDetail () {
+    cardSelected.value = props.card
     cardDetailShow.value = true
   }
 
