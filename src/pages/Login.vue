@@ -1,6 +1,63 @@
 <template>
-  login
+  <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-zinc-100">
+    <div class="w-max h-max flex flex-col items-center gap-10">
+      <img
+        class="h-[30px]"
+        draggable="false"
+        src="/logo.png"
+      >
+      <div class="w-[400px] h-max bg-white rounded-lg shadow-lg p-5 space-y-5">
+        <div class="w-full">
+          <div class="w-full text-zinc-500 select-none text-[14px] mb-1">
+            Email
+          </div>
+          <input
+            v-model="form.email"
+            class="block w-full h-[40px] border rounded-md px-5"
+            placeholder="Masukan Email"
+          >
+        </div>
+        <div class="w-full">
+          <div class="w-full text-zinc-500 select-none text-[14px] mb-1">
+            Password
+          </div>
+          <input
+            v-model="form.password"
+            class="block w-full h-[40px] border rounded-md px-5"
+            placeholder="Masukan Password"
+            type="password"
+          >
+        </div>
+        <div
+          v-if="showError"
+          class="text-red-500"
+        >
+          Email atau password salah!
+        </div>
+        <div class="w-full pt-5">
+          <button
+            class="w-full h-[45px] bg-yellow-500 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-600 transition-all"
+            @click="handleLogin"
+          >
+            Masuk
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
+  import { reactive, ref } from 'vue'
+
+  const form = reactive({
+    email: '',
+    password: ''
+  })
+
+  const showError = ref(false)
+
+  function handleLogin () {
+    
+  }
 </script>
