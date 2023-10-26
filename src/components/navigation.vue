@@ -58,17 +58,17 @@
   const menus = [
     {
       name: ['board', 'board-detail'],
-      path: '/board',
+      path: '/app/board',
       display: 'Board'
     },
     {
       name: ['chart', 'chart-detail'],
-      path: '/chart',
+      path: '/app/chart',
       display: 'Grafik'
     },
     {
       name: ['employee'],
-      path: '/employee',
+      path: '/app/employee',
       display: 'Karyawan'
     }
   ]
