@@ -18,6 +18,13 @@ async function createCard (req, res) {
   res.send(null)
 }
 
+async function updateCard (req, res) {
+  const id = req.params.id
+  const { title, description, point } = req.body
+  await updateDoc(doc(db, 'cards', id), { title, description, point })
+  res.send(null)
+}
+
 async function updateStatusCard (req, res) {
   const id = req.params.id
   const { status } = req.body
@@ -25,4 +32,4 @@ async function updateStatusCard (req, res) {
   res.send(null)
 }
 
-module.exports = { getCard, createCard, updateStatusCard }
+module.exports = { getCard, createCard, updateCard, updateStatusCard }

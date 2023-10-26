@@ -5,7 +5,10 @@
     @click.self="handleClose"
   >
     <div class="w-max h-max bg-white rounded-xl p-5 space-y-5">
-      <div class="text-lg font-semibold">Tambah Card</div>
+      <div class="text-lg font-semibold">
+        <template v-if="props.card.id">Ubah Card</template>
+        <template v-else>Tambah Card</template>
+      </div>
       <input
         v-model="form.title"
         class="block w-[300px] h-[40px] border rounded-md px-5"
@@ -70,7 +73,11 @@
   }
 
   function handleSubmit () {
-    emit('submit', form)
+    const sendForm = {
+      id: props.card.id || null,
+      ...form,
+    }
+    emit('submit', sendForm)
     handleClose()
   }
 

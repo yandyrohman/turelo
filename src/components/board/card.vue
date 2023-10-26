@@ -48,6 +48,7 @@
     <card-detail
       v-model:show="cardDetailShow"
       :card="cardSelected"
+      @edit="handleEdit"
     />
   </teleport>
 </template>
@@ -89,7 +90,7 @@
     }
   })
 
-  const emit = defineEmits(['drag', 'release'])
+  const emit = defineEmits(['drag', 'release', 'edit'])
 
   function handleDragStart (event) {
     const card = document.getElementById(id.value)
@@ -129,5 +130,9 @@
 
       emit('drag', props.card)
     }
+  }
+
+  function handleEdit (card) {
+    emit('edit', card)
   }
 </script>

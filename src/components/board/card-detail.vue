@@ -8,7 +8,10 @@
       <div class="w-full flex justify-between items-center mb-[-10px] select-none">
         <div class="text-[14px] text-zinc-500">Detail</div>
         <div class="flex gap-2">
-          <div class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md">
+          <div
+            class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md"
+            @click="handleEdit"
+          >
             <icon icon="tabler:edit" />
           </div>
           <div class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md">
@@ -58,9 +61,14 @@
     }
   })
 
-  const emit = defineEmits(['update:show'])
+  const emit = defineEmits(['update:show', 'edit'])
 
   function handleClose () {
+    emit('update:show', false)
+  }
+
+  function handleEdit () {
+    emit('edit', props.card)
     emit('update:show', false)
   }
 </script>

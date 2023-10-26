@@ -17,6 +17,7 @@
         :card="card"
         @drag="handleDrag"
         @release="handleRelease"
+        @edit="handleEditCard"
       />
     </div>
     <div class="w-full p-3">
@@ -32,6 +33,7 @@
   <teleport to="body">
     <kanban-form
       v-model:show="state.showForm"
+      :card="state.selectCard"
       @submit="handleSubmitForm"
     />
   </teleport>
@@ -40,7 +42,7 @@
 <script setup>
   import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
   import { Icon } from '@iconify/vue'
-  import { getCard, createCard, updateStatusCard } from '../../services/kanban'
+  import { getCard, createCard, updateCard, updateStatusCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
   import kanbanCard from './card.vue'
@@ -70,7 +72,8 @@
 
   const state = reactive({
     cards: [],
-    showForm: false
+    showForm: false,
+    selectCard: {}
   })
 
   const cardOverThisKanban = computed(() => {
@@ -84,6 +87,12 @@
   const emit = defineEmits(['drag', 'release'])
 
   function handleShowForm () {
+    state.selectCard = {}
+    state.showForm = true
+  }
+
+  function handleEditCard (card) {
+    state.selectCard = card
     state.showForm = true
   }
 
@@ -93,9 +102,13 @@
     state.cards = filteredData
   }
 
-  async function handleSubmitForm ({ title, description, point }) {
+  async function handleSubmitForm ({ id, title, description, point }) {
     const status = props.status
-    await createCard({ title, description, point, status })
+    if (id) {
+      await updateCard(id, { title, description, point })
+    } else {
+      await createCard({ title, description, point, status })
+    }
     handleGetCard()
   }
 
