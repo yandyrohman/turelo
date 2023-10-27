@@ -7,7 +7,7 @@
           v-for="board in state.boards"
           :key="board._id"
           class="relative w-full h-[180px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer select-none"
-          :to="'/board/' + board.id"
+          :to="'/app/board/' + board.id"
         >
           <img
             class="absolute w-full h-full object-cover top-0 left-0"

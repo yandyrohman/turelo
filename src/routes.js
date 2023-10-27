@@ -6,7 +6,7 @@ const routes = createRouter({
     {
       name: 'login',
       path: '/',
-      component: () => import('./pages/Login.vue')
+      component: () => import('./pages/Login.vue'),
     },
     {
       path: '/app',
@@ -46,6 +46,20 @@ const routes = createRouter({
     }
   ]
 })
+
+routes.beforeEach((to, from, next) => {
+  if (to.name != 'login') {
+    const hasLogin = !!localStorage.getItem('user')
+    if (hasLogin) {
+      return next()
+    } else {
+      return next('/')
+    }
+  } else {
+    return next()
+  }
+})
+
 
 export default routes
 

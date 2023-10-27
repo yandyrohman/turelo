@@ -3,7 +3,7 @@
     <div class="w-max">
       <router-link
         class="w-max flex items-center gap-2 select-none cursor-pointer hover:bg-black/10 transition-all px-3 py-1 rounded-full"
-        to="/chart"
+        to="/app/chart"
       >
         <icon icon="tabler:arrow-left" class="text-xl" />
         <div class="max-w-[450px] line-clamp-1 break-all font-semibold">

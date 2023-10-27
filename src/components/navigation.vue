@@ -37,7 +37,12 @@
             >
               Profile
             </router-link>
-            <div class="px-5 py-2 hover:bg-zinc-100 select-none cursor-pointer font-semibold">Logout</div>
+            <div
+              class="px-5 py-2 hover:bg-zinc-100 select-none cursor-pointer font-semibold"
+              @click="handleLogout"
+            >
+              Logout
+            </div>
           </div>
         </div>
       </div>
@@ -47,9 +52,10 @@
 
 <script setup>
   import { reactive, onMounted } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
 
   const route = useRoute()
+  const router = useRouter()
 
   const state = reactive({
     showMenu: false
@@ -75,6 +81,11 @@
 
   function handleToggleMenu (toggle) {
     state.showMenu = toggle
+  }
+
+  function handleLogout () {
+    localStorage.removeItem('user')
+    router.push('/')
   }
 
   onMounted(() => {

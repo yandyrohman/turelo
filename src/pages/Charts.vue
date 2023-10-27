@@ -6,7 +6,7 @@
         <router-link
           v-for="i in 12"
           class="relative w-full h-[180px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer select-none flex flex-col justify-between"
-          to="/chart/abc"
+          to="/app/chart/abc"
         >
           <div class="font-semibold text-lg leading-tight py-3 px-5">
             <span class="line-clamp-2 break-all">
