@@ -25,7 +25,7 @@
           <img
             class="w-[35px] h-[35px] rounded-full cursor-pointer"
             draggable="false"
-            src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+            :src="profilePicture"
           >
           <div
             v-if="state.showMenu"
@@ -33,7 +33,7 @@
           >
             <router-link
               class="block px-5 py-2 hover:bg-zinc-100 select-none cursor-pointer font-semibold"
-              to="/profile"
+              to="/app/profile"
             >
               Profile
             </router-link>
@@ -60,6 +60,8 @@
   const state = reactive({
     showMenu: false
   })
+
+  const profilePicture = JSON.parse(localStorage.getItem('user')).picture
 
   const menus = [
     {
