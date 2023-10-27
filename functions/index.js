@@ -1,6 +1,7 @@
 const functions = require('firebase-functions')
 const express = require('express')
 
+const { postLogin } = require('./services/user')
 const { getEmployee, createEmployee, updateEmployee, deleteEmployee } = require('./services/employee')
 const { getBoard, createBoard } = require('./services/board')
 const { getCard, createCard, updateCard, updateStatusCard, deleteCard } = require('./services/kanban')
@@ -16,6 +17,8 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (req, res) => res.send('service running'))
+
+app.post('/login', postLogin)
 
 app.get('/employee', getEmployee)
 app.post('/employee', createEmployee)

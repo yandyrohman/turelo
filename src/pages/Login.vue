@@ -49,6 +49,10 @@
 
 <script setup>
   import { reactive, ref } from 'vue'
+  import { useRouter } from 'vue-router'
+  import { login } from '../services/user'
+
+  const router = useRouter()
 
   const form = reactive({
     email: '',
@@ -57,7 +61,17 @@
 
   const showError = ref(false)
 
-  function handleLogin () {
-    
+  async function handleLogin () {
+    showError.value = false
+    const { data: loginResult } = await login({
+      email: form.email,
+      password: form.password
+    })
+    if (loginResult.success) {
+      localStorage.setItem('user', JSON.stringify(loginResult.user))
+      router.push('/app/board')
+    } else {
+      showError.value = true
+    }
   }
 </script>
