@@ -19,6 +19,7 @@
         @release="handleRelease"
         @edit="handleEditCard"
         @delete="handleDeleteCard"
+        @assign="handleAssign"
       />
     </div>
     <div class="w-full p-3">
@@ -43,10 +44,11 @@
 <script setup>
   import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
   import { Icon } from '@iconify/vue'
-  import { getCard, createCard, updateCard, updateStatusCard, deleteCard } from '../../services/kanban'
+  import { getCard, createCard, updateCard, updateStatusCard, deleteCard, assignCard } from '../../services/kanban'
   
   import kanbanForm from './kanban-form.vue'
   import kanbanCard from './card.vue'
+  import Swal from 'sweetalert2'
 
   const props = defineProps({
     name: {
@@ -143,6 +145,28 @@
     await deleteCard(cardId)
     handleGetCard()
   }
+  
+  async function handleAssign ({ cardId, user }) {
+    await assignCard(cardId, user)
+    handleGetCard()
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom-right',
+      iconColor: 'white',
+      customClass: {
+        popup: 'colored-toast'
+      },
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true
+    })
+    await Toast.fire({
+      icon: 'success',
+      title: 'Berhasil Menandai',
+      color: 'white'
+    })
+  }
 
   watch(() => props.dragover, () => {
     if (props.dragover === false) {
@@ -170,5 +194,9 @@
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background: #666;
+  }
+
+  .colored-toast.swal2-icon-success {
+    background-color: #a5dc86 !important;
   }
 </style>

@@ -20,3 +20,7 @@ export function updateStatusCard (id, status) {
 export function deleteCard (id) {
   return axios.delete(`${baseUrl}/card/${id}`)
 }
+
+export function assignCard (id, user) {
+  return axios.put(`${baseUrl}/card/${id}/assign`, { user })
+}

@@ -30,17 +30,36 @@
       {{ props.card.description }}
     </div>
     <div class="w-max flex gap-1 pt-2">
+      <div
+        v-if="!isAssigned()"
+        class="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-zinc-200 border-2 border-dashed"
+        @mousedown.stop
+        @click.stop="handleAssignToMe"
+      >
+        <icon icon="tabler:user-plus" class="text-zinc-500" />
+      </div>
+      <div
+        v-if="isAssigned()"
+        class="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-red-100 hover:bg-red-200 border border-red-300"
+        @mousedown.stop
+        @click.stop="handleAssignToMe"
+      >
+        <icon icon="tabler:user-minus" class="text-red-500" />
+      </div>
       <img
-        v-for="i in 6"
+        v-for="assign in assigns"
+        :key="assign.id"
         class="w-[30px] h-[30px] rounded-full"
         draggable="false"
-        src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+        :src="assign.picture"
       >
-      <div class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center hover:bg-zinc-200">
+      <div
+        v-if="props.card.assigns.length > 4"
+        class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center hover:bg-zinc-200"
+        @mousedown.stop
+        @click.stop
+      >
         <icon icon="tabler:dots" class="text-zinc-500" />
-      </div>
-      <div class="w-[30px] h-[30px] rounded-full flex justify-center items-center hover:bg-zinc-200 border-2 border-dashed">
-        <icon icon="tabler:user-plus" class="text-zinc-500" />
       </div>
     </div>
   </div>
@@ -64,6 +83,15 @@
     card: {
       type: Object,
       default: () => ({})
+    }
+  })
+
+  const assigns = computed(() => {
+    const length = props.card.assigns.length
+    if (length > 4) {
+      return props.card.assigns.slice(0, 4)
+    } else {
+      return props.card.assigns
     }
   })
 
@@ -91,7 +119,7 @@
     }
   })
 
-  const emit = defineEmits(['drag', 'release', 'edit', 'delete'])
+  const emit = defineEmits(['drag', 'release', 'edit', 'delete', 'assign'])
 
   function handleDragStart (event) {
     const card = document.getElementById(id.value)
@@ -139,5 +167,18 @@
 
   function handleDelete (cardId) {
     emit('delete', cardId)
+  }
+
+  function handleAssignToMe () {
+    const cardId = props.card.id
+    const user = JSON.parse(localStorage.getItem('user'))
+    emit('assign', { cardId, user })
+  }
+
+  function isAssigned () {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const assigns = props.card.assigns
+    const isExist = !!assigns.find(a => a.id === user.id)
+    return isExist
   }
 </script>
