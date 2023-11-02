@@ -15,6 +15,7 @@
             v-model="form.email"
             class="block w-full h-[40px] border rounded-md px-5"
             placeholder="Masukan Email"
+            @keypress="handleEnter"
           >
         </div>
         <div class="w-full">
@@ -26,6 +27,7 @@
             class="block w-full h-[40px] border rounded-md px-5"
             placeholder="Masukan Password"
             type="password"
+            @keypress="handleEnter"
           >
         </div>
         <div
@@ -73,5 +75,9 @@
     } else {
       showError.value = true
     }
+  }
+
+  function handleEnter (event) {
+    if (event.keyCode === 13) handleLogin()
   }
 </script>
