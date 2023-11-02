@@ -7,23 +7,25 @@
       >
         <icon icon="tabler:arrow-left" class="text-xl" />
         <div class="max-w-[450px] line-clamp-1 break-all font-semibold">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque iusto provident qui laborum, libero temporibus ipsum facilis voluptatum explicabo consequuntur accusantium ut natus officia tempora? Harum placeat ullam aut expedita?
+          {{ board.name }}
         </div>
       </router-link>
-      <div class="text-sm text-zinc-600 select-none ml-[40px]">25 Total Card</div>
+      <div class="text-sm text-zinc-600 select-none ml-[40px]">
+        {{ board.cards?.length }} Total Card
+      </div>
     </div>
     <div class="w-max">
       <div class="text-sm text-zinc-600 select-none mb-3">Semua Anggota</div>
       <div class="flex items-center gap-2">
         <div class="w-max flex rounded-[10px] space-x-[-10px] select-none">
           <img
-            v-for="i in 4"
+            v-for="member in board.members"
             draggable="false"
             class="w-[30px] h-[30px] object-cover rounded-full"
-            src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+            :src="member.picture"
           >
-          <div class="w-[30px] h-[30px] rounded-full bg-white border-dashed flex justify-center items-center text-sm font-semibold text-zinc-400 select-none">
-            9+
+          <div class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center">
+            <icon icon="tabler:dots" class="text-zinc-500" />
           </div>
         </div>
         <div class="text-sm underline select-none cursor-pointer font-semibold">Lihat Semua</div>
@@ -33,5 +35,22 @@
 </template>
 
 <script setup>
+  import { onMounted, ref } from 'vue'
+  import { useRoute } from 'vue-router'
   import { Icon } from '@iconify/vue'
+  import { getBoardDetail } from '../../services/board'
+
+  const route = useRoute()
+  const board = ref({})
+
+  async function handleGetDetail () {
+    const boardId = route.params.id
+    const { data } = await getBoardDetail(boardId)
+    console.log(data)
+    board.value = data
+  }
+
+  onMounted(() => {
+    handleGetDetail()
+  })
 </script>
