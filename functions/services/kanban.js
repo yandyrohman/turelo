@@ -1,9 +1,16 @@
 const db = require('./db')
-const { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc } = require('firebase/firestore')
+const { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } = require('firebase/firestore')
 
 async function getCard (req, res) {
   const results = []
-  const snapshot = await getDocs(collection(db, 'cards'))
+  const boardId = req.query.boardId
+
+  const q = query(
+    collection(db, 'cards'),
+    where('boardId', '==', boardId),
+  )
+
+  const snapshot = await getDocs(q)
   snapshot.forEach(doc => results.push({
     id: doc.id,
     ...doc.data()

@@ -103,7 +103,8 @@
   }
 
   async function handleGetCard () {
-    const { data } = await getCard()
+    const boardId = route.params.id
+    const { data } = await getCard(boardId)
     const filteredData = data.filter(d => d.status === props.status).sort((a, b) => a.timestamp - b.timestamp)
     state.cards = filteredData
   }

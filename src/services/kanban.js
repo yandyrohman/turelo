@@ -1,8 +1,10 @@
 import { baseUrl } from './setup'
 import axios from 'axios'
 
-export function getCard () {
-  return axios.get(`${baseUrl}/card`)
+export function getCard (boardId) {
+  return axios.get(`${baseUrl}/card`, {
+    params: { boardId }
+  })
 }
 
 export function createCard ({ title, description, point, status, boardId }) {
