@@ -17,4 +17,9 @@ async function createBoard (req, res) {
   res.send(null)
 }
 
-module.exports = { getBoard, createBoard }
+async function getBoardDetail (req, res) {
+  const members = []
+  return members
+}
+
+module.exports = { getBoard, createBoard, getBoardDetail }

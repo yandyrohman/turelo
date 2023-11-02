@@ -12,9 +12,9 @@ async function getCard (req, res) {
 }
 
 async function createCard (req, res) {
-  const { title, description, point, status } = req.body
+  const { title, description, point, status, boardId } = req.body
   const timestamp = Date.now()
-  await addDoc(collection(db, 'cards'), { title, description, point, status, timestamp, assigns: [] })
+  await addDoc(collection(db, 'cards'), { title, description, point, status, timestamp, boardId, assigns: [] })
   res.send(null)
 }
 

@@ -43,12 +43,15 @@
 
 <script setup>
   import { defineProps, defineEmits, reactive, onMounted, computed, watch } from 'vue'
-  import { Icon } from '@iconify/vue'
+  import { useRoute } from 'vue-router'
   import { getCard, createCard, updateCard, updateStatusCard, deleteCard, assignCard } from '../../services/kanban'
+  import { Icon } from '@iconify/vue'
   
   import kanbanForm from './kanban-form.vue'
   import kanbanCard from './card.vue'
   import Swal from 'sweetalert2'
+
+  const route = useRoute()
 
   const props = defineProps({
     name: {
@@ -106,11 +109,12 @@
   }
 
   async function handleSubmitForm ({ id, title, description, point }) {
+    const boardId = route.params.id
     const status = props.status
     if (id) {
       await updateCard(id, { title, description, point })
     } else {
-      await createCard({ title, description, point, status })
+      await createCard({ title, description, point, status, boardId })
     }
     handleGetCard()
   }

@@ -5,8 +5,8 @@ export function getCard () {
   return axios.get(`${baseUrl}/card`)
 }
 
-export function createCard ({ title, description, point, status }) {
-  return axios.post(`${baseUrl}/card`, { title, description, point, status })
+export function createCard ({ title, description, point, status, boardId }) {
+  return axios.post(`${baseUrl}/card`, { title, description, point, status, boardId })
 }
 
 export function updateCard (id, { title, description, point }) {
