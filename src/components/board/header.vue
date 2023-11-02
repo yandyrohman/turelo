@@ -46,7 +46,6 @@
   async function handleGetDetail () {
     const boardId = route.params.id
     const { data } = await getBoardDetail(boardId)
-    console.log(data)
     board.value = data
   }
 
