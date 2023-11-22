@@ -1,15 +1,28 @@
 <template>
   <div class="w-full h-[110px] flex justify-between px-[50px] pt-[20px]">
     <div class="w-max">
-      <router-link
-        class="w-max flex items-center gap-2 select-none cursor-pointer hover:bg-black/10 transition-all px-3 py-1 rounded-full"
-        to="/app/board"
-      >
-        <icon icon="tabler:arrow-left" class="text-xl" />
-        <div class="max-w-[450px] line-clamp-1 break-all font-semibold">
-          {{ board.name }}
+      <div class="w-max flex items-center gap-5">
+        <router-link
+          class="w-max flex items-center gap-2 select-none cursor-pointer hover:bg-black/10 transition-all px-3 py-1 rounded-full"
+          to="/app/board"
+        >
+          <icon icon="tabler:arrow-left" class="text-xl" />
+          <div class="max-w-[450px] line-clamp-1 break-all font-semibold">
+            {{ board.name }}
+          </div>
+        </router-link>
+        <div class="flex gap-3">
+          <div
+            class="w-[35px] h-[35px] border border-zinc-400 hover:bg-zinc-400 rounded-full flex justify-center items-center cursor-pointer"
+            @click="handleShowForm"
+          >
+            <icon icon="tabler:edit" />
+          </div>
+          <div class="w-[35px] h-[35px] border border-zinc-400 hover:bg-zinc-400 rounded-full flex justify-center items-center cursor-pointer">
+            <icon icon="tabler:trash" />
+          </div>
         </div>
-      </router-link>
+      </div>
       <div class="text-sm text-zinc-600 select-none ml-[40px]">
         {{ board.cards?.length }} Total Card
       </div>
@@ -48,19 +61,26 @@
     v-model:show="detailMemberShow"
     :members="board.members"
   />
+  <board-form
+    v-model:show="formShow"
+    :board="board"
+    @submit="handleUpdateBoard"
+  />
 </template>
 
 <script setup>
   import { onMounted, ref, computed } from 'vue'
   import { useRoute } from 'vue-router'
   import { Icon } from '@iconify/vue'
-  import { getBoardDetail } from '../../services/board'
+  import { getBoardDetail, updateBoard } from '../../services/board'
 
   import memberDetail from './member-detail.vue'
+  import boardForm from './form.vue'
 
   const route = useRoute()
   const board = ref({})
   const detailMemberShow = ref(false)
+  const formShow = ref(false)
 
   const members = computed(() => {
     if (board.value.members) {
@@ -78,6 +98,17 @@
 
   function handleShowMemberDetail () {
     detailMemberShow.value = true
+  }
+
+  function handleShowForm () {
+    formShow.value = true
+  }
+
+  async function handleUpdateBoard ({ picture, name }) {
+    const boardId = board.value.id
+    await updateBoard(boardId, { picture, name })
+    const { data } = await getBoardDetail(boardId)
+    board.value = data
   }
 
   onMounted(() => {

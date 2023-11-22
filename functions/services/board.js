@@ -1,5 +1,5 @@
 const db = require('./db')
-const { collection, addDoc, getDocs, getDoc, doc, query, where } = require('firebase/firestore')
+const { collection, addDoc, getDocs, setDoc, getDoc, doc, query, where } = require('firebase/firestore')
 
 async function getBoard (req, res) {
   const results = []
@@ -40,6 +40,13 @@ async function getBoardDetail (req, res) {
   res.send(boardDetail)
 }
 
+async function updateBoard (req, res) {
+  const id = req.params.id
+  const { picture, name } = req.body
+  await setDoc(doc(db, 'boards', id), { picture, name })
+  res.send(null)
+}
+
 async function _getBoardMembersAndCards (boardId) {
   const members = []
   const cards = []
@@ -65,4 +72,4 @@ async function _getBoardMembersAndCards (boardId) {
   return { members, cards }
 }
 
-module.exports = { getBoard, createBoard, getBoardDetail }
+module.exports = { getBoard, createBoard, getBoardDetail, updateBoard }

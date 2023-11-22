@@ -5,7 +5,9 @@
     @click.self="handleClose"
   >
     <div class="w-max h-max bg-white rounded-xl p-5 space-y-5">
-      <div class="text-lg font-semibold">Tambah Board</div>
+      <div class="text-lg font-semibold">
+        Tambah Board
+      </div>
       <photo-form v-model="form.picture" />
       <input
         v-model="form.name"
@@ -53,8 +55,6 @@
   const emit = defineEmits(['update:show', 'submit'])
 
   function handleClose () {
-    form.picture = ''
-    form.name = ''
     emit('update:show', false)
   }
 

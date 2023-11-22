@@ -3,7 +3,7 @@ const express = require('express')
 
 const { postLogin } = require('./services/user')
 const { getEmployee, createEmployee, updateEmployee, deleteEmployee } = require('./services/employee')
-const { getBoard, createBoard, getBoardDetail } = require('./services/board')
+const { getBoard, createBoard, getBoardDetail, updateBoard } = require('./services/board')
 const { getCard, createCard, updateCard, updateStatusCard, deleteCard, assignCard } = require('./services/kanban')
 
 const app = express()
@@ -27,6 +27,7 @@ app.delete('/employee/:id', deleteEmployee)
 
 app.get('/board', getBoard)
 app.get('/board/:id', getBoardDetail)
+app.put('/board/:id', updateBoard)
 app.post('/board', createBoard)
 
 app.get('/card', getCard)
