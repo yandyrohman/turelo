@@ -8,6 +8,13 @@ async function getBoard (req, res) {
     id: doc.id,
     ...doc.data()
   }))
+
+  for await (const result of results) {
+    const boardId = result.id
+    const { members } = await _getBoardMembersAndCards(boardId)
+    result.members = members
+  }
+
   res.send(results)
 }
 

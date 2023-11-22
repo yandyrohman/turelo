@@ -22,13 +22,19 @@
             </div>
             <div class="w-max flex px-3 py-1 bg-white/50 rounded-[10px] space-x-[-10px] select-none">
               <img
-                v-for="i in 4"
+                v-for="member in board.members.slice(0, 4)"
                 draggable="false"
                 class="w-[30px] h-[30px] object-cover rounded-full"
-                src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+                :src="member.picture"
               >
-              <div class="w-[30px] h-[30px] rounded-full bg-white border-dashed flex justify-center items-center text-sm font-semibold text-zinc-400 select-none">
-                9+
+              <div
+                v-if="board.members.length > 4"
+                class="w-[30px] h-[30px] rounded-full bg-white border-dashed flex justify-center items-center text-sm font-semibold text-zinc-400 select-none"
+              >
+                {{ board.members.length - 4 }}+
+              </div>
+              <div v-if="board.members.length === 0">
+                Belum ada anggota
               </div>
             </div>
           </div>
@@ -64,6 +70,7 @@
 
   async function handleGetBoard () {
     const { data } = await getBoard()
+    console.log(data)
     state.boards = data
   }
 
