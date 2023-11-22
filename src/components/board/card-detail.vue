@@ -27,14 +27,25 @@
       </div>
       <div class="w-full flex justify-between items-center">
         <div class="w-max flex gap-1 pt-2">
-          <img
-            v-for="i in 6"
-            class="w-[30px] h-[30px] rounded-full"
-            draggable="false"
-            src="https://www.jamsadr.com/images/neutrals/person-donald-900x1080.jpg"
+          <div
+            v-for="assign in props.card.assigns"
+            class="relative w-max h-max flex justify-center"
           >
-          <div class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center hover:bg-zinc-200 cursor-pointer">
-            <icon icon="tabler:dots" class="text-zinc-500" />
+            <img
+              class="w-[30px] h-[30px] rounded-full"
+              draggable="false"
+              :src="assign.picture"
+              @mouseover="() => assign.isShowMemberName = true"
+              @mouseleave="() => assign.isShowMemberName = false"
+            >
+            <div
+              v-if="assign.isShowMemberName"
+              class="absolute w-max max-w-[200px] h-[30px] top-[30px] bg-black flex items-center px-3 rounded-md"
+            >
+              <span class="line-clamp-1 text-white">
+                {{ assign.name }}
+              </span>
+            </div>
           </div>
         </div>
         <div class="w-max h-max bg-black/10 rounded-full font-semibold text-sm text-zinc-500 select-none px-3 py-1">
@@ -69,6 +80,7 @@
   const emit = defineEmits(['update:show', 'edit', 'delete'])
 
   function handleClose () {
+    console.log(props.card)
     emit('update:show', false)
   }
 
