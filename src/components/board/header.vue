@@ -18,7 +18,10 @@
           >
             <icon icon="tabler:edit" />
           </div>
-          <div class="w-[35px] h-[35px] border border-zinc-400 hover:bg-zinc-400 rounded-full flex justify-center items-center cursor-pointer">
+          <div
+            class="w-[35px] h-[35px] border border-zinc-400 hover:bg-zinc-400 rounded-full flex justify-center items-center cursor-pointer"
+            @click="handleDelete"
+          >
             <icon icon="tabler:trash" />
           </div>
         </div>
@@ -70,14 +73,16 @@
 
 <script setup>
   import { onMounted, ref, computed } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { Icon } from '@iconify/vue'
-  import { getBoardDetail, updateBoard } from '../../services/board'
+  import { getBoardDetail, updateBoard, deleteBoard } from '../../services/board'
 
   import memberDetail from './member-detail.vue'
   import boardForm from './form.vue'
+  import Swal from 'sweetalert2'
 
   const route = useRoute()
+  const router = useRouter()
   const board = ref({})
   const detailMemberShow = ref(false)
   const formShow = ref(false)
@@ -109,6 +114,22 @@
     await updateBoard(boardId, { picture, name })
     const { data } = await getBoardDetail(boardId)
     board.value = data
+  }
+
+  async function handleDelete () {
+    const boardId = board.value.id
+    const { isConfirmed } = await Swal.fire({
+      icon: 'warning',
+      title: 'Hapus board ini?',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      confirmButtonColor: '#D32F2F',
+      cancelButtonText: 'Batal'
+    })
+    if (isConfirmed) {
+      await deleteBoard(boardId)
+      router.push('/app/board')
+    } 
   }
 
   onMounted(() => {

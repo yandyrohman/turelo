@@ -16,3 +16,7 @@ export function createBoard ({ picture, name }) {
 export function updateBoard(id, { picture, name }) {
   return axios.put(`${baseUrl}/board/${id}`, { picture, name })
 }
+
+export function deleteBoard (id) {
+  return axios.delete(`${baseUrl}/board/${id}`)
+}
