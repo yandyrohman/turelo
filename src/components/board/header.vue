@@ -16,7 +16,7 @@
     </div>
     <div class="w-max">
       <div class="text-sm text-zinc-600 select-none mb-3">Semua Anggota</div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center">
         <div class="w-max flex rounded-[10px] space-x-[-10px] select-none">
           <img
             v-for="member in members"
@@ -31,10 +31,23 @@
             <icon icon="tabler:dots" class="text-zinc-500" />
           </div>
         </div>
-        <div class="text-sm underline select-none cursor-pointer font-semibold">Lihat Semua</div>
+        <div
+          v-if="board.members?.length"
+          class="text-sm underline select-none cursor-pointer font-semibold ml-2"
+          @click="handleShowMemberDetail"
+        >
+          Lihat Semua
+        </div>
+        <div v-else>
+          Tidak ada anggota
+        </div>
       </div>
     </div>
   </div>
+  <member-detail
+    v-model:show="detailMemberShow"
+    :members="board.members"
+  />
 </template>
 
 <script setup>
@@ -43,8 +56,11 @@
   import { Icon } from '@iconify/vue'
   import { getBoardDetail } from '../../services/board'
 
+  import memberDetail from './member-detail.vue'
+
   const route = useRoute()
   const board = ref({})
+  const detailMemberShow = ref(false)
 
   const members = computed(() => {
     if (board.value.members) {
@@ -58,6 +74,10 @@
     const boardId = route.params.id
     const { data } = await getBoardDetail(boardId)
     board.value = data
+  }
+
+  function handleShowMemberDetail () {
+    detailMemberShow.value = true
   }
 
   onMounted(() => {

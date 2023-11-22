@@ -80,7 +80,6 @@
   const emit = defineEmits(['update:show', 'edit', 'delete'])
 
   function handleClose () {
-    console.log(props.card)
     emit('update:show', false)
   }
 
