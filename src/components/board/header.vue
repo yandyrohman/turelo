@@ -19,12 +19,15 @@
       <div class="flex items-center gap-2">
         <div class="w-max flex rounded-[10px] space-x-[-10px] select-none">
           <img
-            v-for="member in board.members"
+            v-for="member in members"
             draggable="false"
             class="w-[30px] h-[30px] object-cover rounded-full"
             :src="member.picture"
           >
-          <div class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center">
+          <div
+            v-if="board.members?.length > 4"
+            class="w-[30px] h-[30px] rounded-full bg-zinc-100 flex justify-center items-center"
+          >
             <icon icon="tabler:dots" class="text-zinc-500" />
           </div>
         </div>
@@ -35,13 +38,21 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, computed } from 'vue'
   import { useRoute } from 'vue-router'
   import { Icon } from '@iconify/vue'
   import { getBoardDetail } from '../../services/board'
 
   const route = useRoute()
   const board = ref({})
+
+  const members = computed(() => {
+    if (board.value.members) {
+      return board.value.members.slice(0, 4)
+    } else {
+      return []
+    }
+  })
 
   async function handleGetDetail () {
     const boardId = route.params.id
