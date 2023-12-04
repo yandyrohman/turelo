@@ -28,15 +28,20 @@
 
   async function handleChange (event) {
     const file = event.target.files[0]
-
+    const uploadPreset = 'xjupwzuc'
+    const cloudName = 'daryqrww3'
     const formData = new FormData()
 
-    formData.append('key', '79907262ab011cb05701bfa92ae698e6')
-    formData.append('image', file)
+    formData.append('file', file)
+    formData.append('upload_preset', uploadPreset)
 
-    const { data } = await axios.post('https://api.imgbb.com/1/upload', formData)
+    const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+    )
 
-    const photoUrl = data.data.thumb.url
+    const photoUrl = response?.data?.url
     emit('update:modelValue', photoUrl)
-}
+  }
 </script>
