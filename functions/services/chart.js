@@ -13,8 +13,14 @@ async function getChart (req, res) {
 
   for await (const result of results) {
     const boardId = result.id
-    const { members } = await _getBoardMembersAndCards(boardId)
+    const { members, cards } = await _getBoardMembersAndCards(boardId)
+    
+    const allCardsCount = cards.length
+    const doneCardsCount = cards.filter(card => card.status === 'done').length
+    const progress = Math.round((doneCardsCount / allCardsCount) * 100) || 0
+
     result.members = members
+    result.progress = progress
   }
 
   res.send(results)

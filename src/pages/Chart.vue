@@ -30,8 +30,6 @@
     const { data } = await getChartDetail(boardId)
     totalPoint.value = data.totalPoint
     logs.value = data.logs
-
-    console.log(data)
   }
 
   onMounted(() => {

@@ -16,11 +16,14 @@
           <div class="w-full pb-5">
             <div class="w-full flex justify-between px-5 mb-1">
               <span class="text-zinc-500 text-sm">Progress</span>
-              <span class="text-zinc-500 text-sm">xx%</span>
+              <span class="text-zinc-500 text-sm">{{ chart.progress }}%</span>
             </div>
             <div class="w-full px-5 mb-5">
               <div class="relative w-full h-[10px] bg-zinc-100 rounded-full">
-                <div class="absolute w-[45%] h-full bg-green-500 top-0 left-0 rounded-full"></div>
+                <div
+                  class="absolute h-full bg-green-500 top-0 left-0 rounded-full"
+                  :style="styleBoardProgress(chart)"
+                />
               </div>
             </div>
             <div class="w-max flex px-5 py-1 rounded-[10px] space-x-[-10px] select-none">
@@ -58,6 +61,10 @@
   async function handleGetChart () {
     const { data } = await getChart()
     state.charts = data
+  }
+
+  function styleBoardProgress (chart) {
+    return `width: ${chart.progress}%`
   }
 
   onMounted(() => {
