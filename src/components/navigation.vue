@@ -6,15 +6,19 @@
       src="/logo.png"
     >
     <div class="w-max flex gap-4">
-      <router-link
+      <template
         v-for="(menu, index) in menus"
         :key="index"
-        class="block w-max h-max rounded-full px-5 py-1 font-semibold select-none cursor-pointer hover:underline"
-        :class="{ 'bg-black/10': menu.name.includes(route.name) }"
-        :to="menu.path"
       >
-        {{ menu.display }}
-      </router-link>
+        <router-link
+          v-if="showMenu(menu)"
+          class="block w-max h-max rounded-full px-5 py-1 font-semibold select-none cursor-pointer hover:underline"
+          :class="{ 'bg-black/10': menu.name.includes(route.name) }"
+          :to="menu.path"
+        >
+          {{ menu.display }}
+        </router-link>
+      </template>
     </div>
     <div class="w-max h-max">
       <div class="relative w-[150px] h-max flex justify-end">
@@ -61,23 +65,27 @@
     showMenu: false
   })
 
-  const profilePicture = JSON.parse(localStorage.getItem('user')).picture
+  const profile = JSON.parse(localStorage.getItem('user'))
+  const profilePicture = profile.picture
 
   const menus = [
     {
       name: ['board', 'board-detail'],
       path: '/app/board',
-      display: 'Board'
+      display: 'Board',
+      adminOnly: false
     },
     {
       name: ['chart', 'chart-detail'],
       path: '/app/chart',
-      display: 'Grafik'
+      display: 'Grafik',
+      adminOnly: false
     },
     {
       name: ['employee'],
       path: '/app/employee',
-      display: 'Karyawan'
+      display: 'Karyawan',
+      adminOnly: true
     }
   ]
 
@@ -88,6 +96,14 @@
   function handleLogout () {
     localStorage.removeItem('user')
     router.push('/')
+  }
+
+  function showMenu (menu) {
+    if (menu.adminOnly) {
+      return profile.role === 'admin'
+    } else {
+      return true
+    }
   }
 
   onMounted(() => {

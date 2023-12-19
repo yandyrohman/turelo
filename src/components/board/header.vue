@@ -11,7 +11,10 @@
             {{ board.name }}
           </div>
         </router-link>
-        <div class="flex gap-3">
+        <div
+          v-if="profile.role === 'admin'"
+          class="flex gap-3"
+        >
           <div
             class="w-[35px] h-[35px] border border-zinc-400 hover:bg-zinc-400 rounded-full flex justify-center items-center cursor-pointer"
             @click="handleShowForm"
@@ -80,6 +83,8 @@
   import memberDetail from './member-detail.vue'
   import boardForm from './form.vue'
   import Swal from 'sweetalert2'
+
+  const profile = JSON.parse(localStorage.getItem('user'))
 
   const route = useRoute()
   const router = useRouter()

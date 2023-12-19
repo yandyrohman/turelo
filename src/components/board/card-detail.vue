@@ -7,7 +7,10 @@
     <div class="w-[500px] h-max bg-white rounded-xl p-5 space-y-5">
       <div class="w-full flex justify-between items-center mb-[-10px] select-none">
         <div class="text-[14px] text-zinc-500">Detail</div>
-        <div class="flex gap-2">
+        <div
+          v-if="profile.role === 'admin'"
+          class="flex gap-2"
+        >
           <div
             class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md"
             @click="handleEdit"
@@ -65,6 +68,8 @@
   import { Icon } from '@iconify/vue'
 
   import Swal from 'sweetalert2'
+
+  const profile = JSON.parse(localStorage.getItem('user'))
 
   const props = defineProps({
     show: {
