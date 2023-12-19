@@ -1,5 +1,5 @@
 const db = require('./db')
-const { collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } = require('firebase/firestore')
+const { collection, addDoc, setDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where } = require('firebase/firestore')
 
 async function getCard (req, res) {
   const results = []
@@ -35,6 +35,7 @@ async function updateCard (req, res) {
 async function updateStatusCard (req, res) {
   const id = req.params.id
   const { status } = req.body
+  await _createOrDeleteLog(id, status)
   await updateDoc(doc(db, 'cards', id), { status })
   res.send(null)
 }
@@ -72,6 +73,22 @@ async function _getOneCard (id) {
     return snapshot.data()
   } else {
     return null
+  }
+}
+
+async function _createOrDeleteLog (cardId, newStatus) {
+  const card = await _getOneCard(cardId)
+  const oldStatus = card.status
+
+  if (oldStatus !== 'done' && newStatus === 'done') {
+    const boardId = card.boardId
+    const point = card.point
+    const timestamp = Date.now()
+    await setDoc(doc(db, 'logs', cardId), { boardId, point, timestamp })
+  }
+
+  if (oldStatus === 'done' && newStatus !== 'done') {
+    await deleteDoc(doc(db, 'logs', cardId))
   }
 }
 
