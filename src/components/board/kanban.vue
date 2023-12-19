@@ -8,6 +8,13 @@
     </div>
     <div class="w-full h-full overflow-y-auto overflow-x-hidden scrollbar-thin space-y-3 pb-5 px-3">
       <div
+        v-if="!state.cards.length && !cardOverThisKanban"
+        class="w-full text-center mt-[20px] text-[14px] text-zinc-400 select-none"
+      >
+        Tidak ada card,<br>
+        silahkan geser card kesini.
+      </div>
+      <div
         v-if="cardOverThisKanban && props.dragover"
         class="w-full h-[150px] bg-zinc-200 rounded-md"
       />
@@ -22,7 +29,10 @@
         @assign="handleAssign"
       />
     </div>
-    <div class="w-full p-3">
+    <div
+      v-if="props.status === 'backlog'"
+      class="w-full p-3"
+    >
       <div
         class="w-full py-1 px-5 flex gap-2 items-center hover:bg-zinc-100 cursor-pointer select-none rounded-md text-zinc-600"
         @click="handleShowForm"
