@@ -1,4 +1,6 @@
+const moment = require('moment')
 const db = require('./db')
+
 const { collection, getDocs, query, where } = require('firebase/firestore')
 
 async function getChart (req, res) {
@@ -16,6 +18,42 @@ async function getChart (req, res) {
   }
 
   res.send(results)
+}
+
+async function getChartDetail (req, res) {
+  const boardId = req.params.id
+  const logsRaw = []
+  
+  const q = query(
+    collection(db, 'logs'),
+    where('boardId', '==', boardId)
+  )
+  
+  const snapshot = await getDocs(q)
+  snapshot.forEach(doc => {
+    const data = doc.data()
+    logsRaw.push(data)
+  })
+
+  const logsSorted = logsRaw.sort((a, b) => a.timestamp - b.timestamp)
+  const logs = []
+  logsSorted.forEach(log => {
+    const logDate = moment(log.timestamp).format('DD-MM-YYYY')
+    const isLogExist = logs.find(logFinal => logFinal.date === logDate)
+    if (isLogExist) {
+      isLogExist.point += log.point
+    } else {
+      logs.push({
+        date: logDate,
+        point: log.point
+      })
+    }
+  })
+  
+  const { cards } = await _getBoardMembersAndCards(boardId)
+  const totalPoint = cards.reduce((total, card) => total + card.point, 0)
+  
+  res.send({ totalPoint, logs })
 }
 
 async function _getBoardMembersAndCards (boardId) {
@@ -44,4 +82,4 @@ async function _getBoardMembersAndCards (boardId) {
 }
 
 
-module.exports = { getChart }
+module.exports = { getChart, getChartDetail }
