@@ -41,7 +41,7 @@
             class="w-full h-[45px] bg-yellow-500 rounded-md text-white font-semibold cursor-pointer hover:bg-yellow-600 transition-all"
             @click="handleLogin"
           >
-            Masuk
+            {{ showLoading ? 'Loading..' : 'Masuk' }}
           </button>
         </div>
       </div>
@@ -62,9 +62,12 @@
   })
 
   const showError = ref(false)
+  const showLoading = ref(false)
 
   async function handleLogin () {
     showError.value = false
+    showLoading.value = true
+    
     const { data: loginResult } = await login({
       email: form.email,
       password: form.password
@@ -75,6 +78,8 @@
     } else {
       showError.value = true
     }
+
+    showLoading.value = false
   }
 
   function handleEnter (event) {
