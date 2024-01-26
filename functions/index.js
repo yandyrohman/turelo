@@ -4,7 +4,7 @@ const express = require('express')
 const { postLogin } = require('./services/user')
 const { getEmployee, createEmployee, updateEmployee, deleteEmployee } = require('./services/employee')
 const { getBoard, createBoard, getBoardDetail, updateBoard, deleteBoard } = require('./services/board')
-const { getCard, createCard, updateCard, updateStatusCard, deleteCard, assignCard } = require('./services/kanban')
+const { getCard, createCard, updateCard, updateStatusCard, updateProofCard, deleteCard, assignCard } = require('./services/kanban')
 const { getChart, getChartDetail } = require('./services/chart')
 
 const app = express()
@@ -36,12 +36,13 @@ app.get('/card', getCard)
 app.post('/card', createCard)
 app.put('/card/:id', updateCard)
 app.put('/card/:id/status', updateStatusCard)
+app.put('/card/:id/proof', updateProofCard)
 app.put('/card/:id/assign', assignCard)
 app.delete('/card/:id', deleteCard)
 
 app.get('/chart', getChart)
 app.get('/chart/:id', getChartDetail)
 
-// app.listen(8080, () => console.log('running on port 8080'))
+app.listen(8080, () => console.log('running on port 8080'))
 
 exports.app = functions.https.onRequest(app)

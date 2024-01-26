@@ -9,8 +9,12 @@
         <div class="text-[14px] text-zinc-500">Detail</div>
         <div
           v-if="profile.role === 'admin'"
-          class="flex gap-2"
+          class="flex gap-2 items-center"
         >
+          <card-proof
+            :id="props.card.id"
+            :proof-url="props.card.proofUrl"
+          />
           <div
             class="w-[30px] h-[30px] flex justify-center items-center hover:bg-zinc-200 cursor-pointer rounded-md"
             @click="handleEdit"
@@ -68,6 +72,7 @@
   import { Icon } from '@iconify/vue'
 
   import Swal from 'sweetalert2'
+  import cardProof from './proof.vue'
 
   const profile = JSON.parse(localStorage.getItem('user'))
 

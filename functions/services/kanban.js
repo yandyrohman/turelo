@@ -40,6 +40,13 @@ async function updateStatusCard (req, res) {
   res.send(null)
 }
 
+async function updateProofCard (req, res) {
+  const id = req.params.id
+  const { proofUrl } = req.body
+  await updateDoc(doc(db, 'cards', id), { proofUrl })
+  res.send(null)
+}
+
 async function deleteCard (req, res) {
   const id = req.params.id
   await deleteDoc(doc(db, 'cards', id))
@@ -92,4 +99,4 @@ async function _createOrDeleteLog (cardId, newStatus) {
   }
 }
 
-module.exports = { getCard, createCard, updateCard, updateStatusCard, deleteCard, assignCard }
+module.exports = { getCard, createCard, updateCard, updateStatusCard, updateProofCard, deleteCard, assignCard }

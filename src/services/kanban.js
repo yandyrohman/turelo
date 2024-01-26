@@ -19,6 +19,10 @@ export function updateStatusCard (id, status) {
   return axios.put(`${baseUrl}/card/${id}/status`, { status })
 }
 
+export function updateProofCard (id, proofUrl) {
+  return axios.put(`${baseUrl}/card/${id}/proof`, { proofUrl })
+}
+
 export function deleteCard (id) {
   return axios.delete(`${baseUrl}/card/${id}`)
 }
