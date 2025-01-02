@@ -36,6 +36,7 @@
           <div class="text-zinc-500 text-sm text-center">Role System</div>
           <div v-if="profile.role === 'admin'" class="text-center">Admin</div>
           <div v-if="profile.role === 'user'" class="text-center">User</div>
+          <div v-if="profile.role === 'manager'" class="text-center">Manager</div>
         </div>
       </div>
     </div>

@@ -56,6 +56,7 @@
         <option value="" hidden>- Pilih Role System -</option>
         <option value="admin">Admin</option>
         <option value="user">User</option>
+        <option value="manager">Manager</option>
       </select>
       <div class="w-full flex gap-3 justify-end pt-5">
         <button

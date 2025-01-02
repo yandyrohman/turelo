@@ -73,19 +73,19 @@
       name: ['board', 'board-detail'],
       path: '/app/board',
       display: 'Board',
-      adminOnly: false
+      for: ['admin', 'user'],
     },
     {
       name: ['chart', 'chart-detail'],
       path: '/app/chart',
       display: 'Grafik',
-      adminOnly: false
+      for: ['admin', 'manager', 'user'],
     },
     {
       name: ['employee'],
       path: '/app/employee',
       display: 'Karyawan',
-      adminOnly: true
+      for: ['admin'],
     }
   ]
 
@@ -99,11 +99,7 @@
   }
 
   function showMenu (menu) {
-    if (menu.adminOnly) {
-      return profile.role === 'admin'
-    } else {
-      return true
-    }
+    return menu.for.includes(profile.role)
   }
 
   onMounted(() => {

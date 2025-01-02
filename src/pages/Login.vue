@@ -74,7 +74,12 @@
     })
     if (loginResult.success) {
       localStorage.setItem('user', JSON.stringify(loginResult.user))
-      router.push('/app/board')
+
+      if (loginResult.user.role === 'manager') {
+        router.push('/app/chart')
+      } else {
+        router.push('/app/board')
+      }
     } else {
       showError.value = true
     }

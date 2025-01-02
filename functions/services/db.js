@@ -2,13 +2,13 @@ const { initializeApp } = require('firebase/app')
 const { getFirestore } = require('firebase/firestore')
 
 const firebaseConfig = {
-  apiKey: "AIzaSyALGwG9Arg1r-mgoS_lHME9Jb7vPZYz6Ec",
-  authDomain: "work-management-yandi.firebaseapp.com",
-  projectId: "work-management-yandi",
-  storageBucket: "work-management-yandi.appspot.com",
-  messagingSenderId: "346508205853",
-  appId: "1:346508205853:web:f87834e224ac4b4d510bf4",
-  measurementId: "G-PWGQVLD277"
+  apiKey: "AIzaSyBcdjmlHBSoew6vUnCUfq0QdqVD0P6Z0d8",
+  authDomain: "turelo-4d089.firebaseapp.com",
+  projectId: "turelo-4d089",
+  storageBucket: "turelo-4d089.firebasestorage.app",
+  messagingSenderId: "101682914850",
+  appId: "1:101682914850:web:899ef708feed3f8c218c7b",
+  measurementId: "G-LTJ59YGGF2"
 };
 
 const app = initializeApp(firebaseConfig)

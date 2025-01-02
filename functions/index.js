@@ -43,6 +43,6 @@ app.delete('/card/:id', deleteCard)
 app.get('/chart', getChart)
 app.get('/chart/:id', getChartDetail)
 
-// app.listen(8080, () => console.log('running on port 8080'))
+app.listen(8080, () => console.log('running on port 8080'))
 
-exports.app = functions.https.onRequest(app)
+// exports.app = functions.https.onRequest(app)
